@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane id="AnchorPane" prefHeight="290.0" prefWidth="519.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="t1_8.FXMLDocumentController">
+    <children>
+        <Button fx:id="button" layoutX="81.0" layoutY="119.0" onAction="#handleButtonAction" text="Crear" />
+      <TextField fx:id="FileText" layoutX="81.0" layoutY="23.0" prefHeight="26.0" prefWidth="246.0" promptText="File path" />
+      <TextArea fx:id="proccessText" layoutX="81.0" layoutY="158.0" prefHeight="101.0" prefWidth="246.0" />
+      <TextField fx:id="FileName" layoutX="81.0" layoutY="65.0" prefHeight="26.0" prefWidth="246.0" promptText="New file name" />
+    </children>
+</AnchorPane>
