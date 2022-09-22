@@ -6,12 +6,13 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="276.0" prefWidth="442.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="t1_5.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="276.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1_5.FXMLDocumentController">
     <children>
-        <Button fx:id="button" layoutX="35.0" layoutY="177.0" onAction="#handleButtonAction" text="Mostrar" />
+        <Button fx:id="button" layoutX="35.0" layoutY="192.0" onAction="#handleButtonAction" text="Mostrar" />
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
       <TextField fx:id="dirText" layoutX="35.0" layoutY="74.0" prefHeight="26.0" prefWidth="148.0" promptText="Introduce un directorio" />
       <TextField fx:id="ExtText" layoutX="35.0" layoutY="125.0" prefHeight="26.0" prefWidth="148.0" promptText="Introduce una extension" />
       <TextArea fx:id="DirFiles" layoutX="221.0" layoutY="41.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="35.0" layoutY="157.0" text="separar las extensiones con ;" />
     </children>
 </AnchorPane>

@@ -38,14 +38,8 @@ public class FXMLDocumentController implements Initializable {
         
         File f = new File(dirText.getText());
         
-        FileFilter fFilefilter = new FileFilter(){
-            public boolean accept(File file) {
-		if (file.getName().endsWith(ExtText.getText())) {
-			return true;
-		}
-		return false;
-            }
-        };
+        String[] arrOfStr = ExtText.getText().split(";");
+        
         
         if(f.isDirectory()){
             if(ExtText.getText().isEmpty()){
@@ -59,16 +53,35 @@ public class FXMLDocumentController implements Initializable {
                 }
                 
             }else{
-            
-                File dirFiles[] = f.listFiles(fFilefilter);
-
+                
                 DirFiles.setText("Files in " + f.getName() + "\n\r");
+                
+                for(String ext : arrOfStr){
+                    
+                    FileFilter fFilefilter = new FileFilter(){
+                        
+                        public boolean accept(File file) {
+                            
+                            if (file.getName().endsWith(ext)) {
+                            
+                                return true;
+                            }
+                                return false;
+                        }
+                    };
+                    
+                    DirFiles.setText(DirFiles.getText() + "Extensión " + ext + ": \n\r");
+                    
+                    File dirFiles[] = f.listFiles(fFilefilter);
 
-                for(File files : dirFiles){
+                    for(File files : dirFiles){
 
-                    DirFiles.setText(DirFiles.getText() + files.getName() + "\n\r");
+                        DirFiles.setText(DirFiles.getText() + files.getName() + "\n\r");
 
+                    }
+                    
                 }
+    
             }
             
         }
