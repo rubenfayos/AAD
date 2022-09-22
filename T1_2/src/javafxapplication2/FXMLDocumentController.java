@@ -39,19 +39,24 @@ public class FXMLDocumentController implements Initializable {
         
         if(f.exists()){
             
+            Alert ac = new Alert(Alert.AlertType.INFORMATION, "Ese directorio existe");
+            
+            ac.setHeaderText("Confirmación");
+            
+            ac.showAndWait();
+            
             dirInfo.setText("Name: " + f.getName() + "\n\r");
             dirInfo.setText(dirInfo.getText() + "Parent directory: " + f.getParent() + "\n\r");
             dirInfo.setText(dirInfo.getText() + "Size: " + f.length() + "\n\r");
             dirInfo.setText(dirInfo.getText() + "Absolute Path: " + f.getPath() + "\n\r");
             dirInfo.setText(dirInfo.getText() + "Is directory: " + f.isDirectory() + "\n\r");
+            dirInfo.setText(dirInfo.getText() + "Is hidden: " + f.isHidden() + "\n\r");
             
         }else{
             
-            Alert a = new Alert(Alert.AlertType.ERROR, "Ese directorio no existe");
+            Alert ae = new Alert(Alert.AlertType.ERROR, "Ese directorio no existe");
             
-            a.showAndWait();
-            
-           
+            ae.showAndWait();
             
         }
         

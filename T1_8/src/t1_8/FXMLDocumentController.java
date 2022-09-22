@@ -46,16 +46,17 @@ public class FXMLDocumentController implements Initializable {
         
         File f = new File(FileText.getText());
         
+        //Crea un nuevo file utilizando la ruta del otro file
         File f2 = new File(f.getParentFile().getAbsolutePath() + "\\" + FileName.getText());
         
         try{
         
-        if(f.exists()){
-            
-            copyFileUsingStream(f, f2);
-            proccessText.setText(f2.getName() + " created in " + f2.getAbsolutePath());
-            
-        }
+            if(f.exists()){
+
+                copyFileUsingStream(f, f2);
+                proccessText.setText(f2.getName() + " created in " + f2.getAbsolutePath());
+
+            }
         
         } catch (IOException e) {
             proccessText.setText("An error occurred.");
@@ -68,6 +69,7 @@ public class FXMLDocumentController implements Initializable {
     OutputStream os = null;
     
     try {
+        
         is = new FileInputStream(source);
         os = new FileOutputStream(dest);
         byte[] buffer = new byte[1024];
@@ -75,6 +77,7 @@ public class FXMLDocumentController implements Initializable {
         while ((length = is.read(buffer)) > 0) {
             os.write(buffer, 0, length);
         }
+        
     } finally {
         is.close();
         os.close();
