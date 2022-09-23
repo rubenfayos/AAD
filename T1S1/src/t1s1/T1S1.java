@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML.java to edit this template
  */
-package t1_8;
+package t1s1;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -14,11 +14,10 @@ import javafx.stage.Stage;
  *
  * @author DAM 2
  */
-public class T1_8 extends Application {
+public class T1S1 extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
