@@ -4,9 +4,14 @@
  */
 package t1_8;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -25,6 +30,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import jdk.jfr.events.FileWriteEvent;
 
 /**
  *
@@ -34,55 +40,42 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Button button;
-    @FXML
     private TextField FileText;
     @FXML
     private TextArea proccessText;
-    @FXML
     private TextField FileName;
+    @FXML
+    private TextField fileText;
+    @FXML
+    private TextField fileName;
     
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void handleButtonAction(ActionEvent event) throws FileNotFoundException, IOException {
         
-        File f = new File(FileText.getText());
-        
-        //Crea un nuevo file utilizando la ruta del otro file
-        File f2 = new File(f.getParentFile().getAbsolutePath() + "\\" + FileName.getText());
-        
-        try{
-        
-            if(f.exists()){
+        //File reader
+        File f1 = new File(fileText.getText());
+        FileReader f1Reader = new FileReader(f1);
+        BufferedReader bf1 = new BufferedReader(f1Reader);
 
-                copyFileUsingStream(f, f2);
-                proccessText.setText(f2.getName() + " created in " + f2.getAbsolutePath());
+        
+        
+        //File writter
+        File f2 = new File(fileName.getText());
+        FileWriter f2Writter = new FileWriter(f2, true);
+        BufferedWriter bf2 = new BufferedWriter(f2Writter);
 
-            }
         
-        } catch (IOException e) {
-            proccessText.setText("An error occurred.");
-        }
-    }
-    
-    private static void copyFileUsingStream(File source, File dest) throws IOException {
-        
-    InputStream is = null;
-    OutputStream os = null;
-    
-    try {
-        
-        is = new FileInputStream(source);
-        os = new FileOutputStream(dest);
-        byte[] buffer = new byte[1024];
-        int length;
-        while ((length = is.read(buffer)) > 0) {
-            os.write(buffer, 0, length);
+        String lines = "";
+        while((lines = bf1.readLine()) != null){
+            
+            bf2.write(lines + "\n");
+                   
         }
         
-    } finally {
-        is.close();
-        os.close();
+        bf1.close();
+        bf2.close();
+            
     }
-}
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
