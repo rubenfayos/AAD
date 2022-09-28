@@ -4,6 +4,7 @@
  */
 package t1s2;
 
+import java.awt.datatransfer.DataFlavor;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -12,13 +13,17 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 /**
  *
@@ -38,27 +43,50 @@ public class FXMLLeerFicheroController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException, InterruptedException {
         
-        try{
+        contenidoText.setText("");
         
-            File f = new File(rutaText.getText());
-            FileReader fReader  = new FileReader(f);
-
-            int fr;
-
-            while((fr = fReader.read()) != -1){
-
-                System.out.println(Character.toString((char)fr));
-                contenidoText.setText(contenidoText.getText() + Character.toString((char)fr));
-                
-                
-
-            }
-          
-        }   catch (FileNotFoundException ex) {
-            Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+        File f = new File(rutaText.getText());
+        
+        String velText = velocidadText.getText();
+        
+        
+        //Definimos la velocidad de lectura
+        int velocidadLectura = 1;
+        if(!velText.isEmpty() && Integer.parseInt(velText) > 0){
+            velocidadLectura = Integer.parseInt(velText);
         }
         
+         
+        int duration = (int) f.length() * velocidadLectura;
         
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidadLectura), new EventHandler<ActionEvent>() {
+            
+            FileReader fReader  = new FileReader(f);
+            int fr = fReader.read();
+            
+            @Override
+            public void handle(ActionEvent event) {
+               
+                try {
+                    
+                
+                contenidoText.setText(contenidoText.getText() + Character.toString((char)fr));
+                fr = fReader.read();
+                
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }
+            
+            
+        }));
+        
+        //Selecciona el tiempo total
+        timeline.setCycleCount(duration);
+        timeline.play();
+        
+        //fReader.close();
         
         
     }

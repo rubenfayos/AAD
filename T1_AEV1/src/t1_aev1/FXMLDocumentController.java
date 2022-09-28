@@ -134,7 +134,7 @@ public class FXMLDocumentController implements Initializable {
                 Files.move(pf1, pf1.resolveSibling(td.getEditor().getText()));
                 
                 leerText.setText("");
-                leerText.setText("Se ha renombrado el archivo");
+                leerText.setText("Se ha renombrado el archivo"); 
                 
             }
                
