@@ -4,14 +4,18 @@
  */
 package t1s2;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -35,7 +39,7 @@ public class FXMLLeerFicheroVelController implements Initializable {
     @FXML
     private TextField rutaText;
     @FXML
-    private Label leerText;
+    private TextArea leerText;
     @FXML
     private TextField rutaText1;
     @FXML
@@ -44,27 +48,30 @@ public class FXMLLeerFicheroVelController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) throws FileNotFoundException, IOException, InterruptedException {
         
-        File f = new File(rutaText.getText());
+        int totalLines = 0;
         
+        File f = new File(rutaText.getText());
+        FileReader fReader = new FileReader(f);
+        BufferedReader bfReader = new BufferedReader(fReader);
+        
+        while(bfReader.readLine() != null) {
+            totalLines++;
+        }
         
         int velocidad = (int) velLecturaLineas.getValue();
-        
-        ArrayList<Character> readChars = new ArrayList<Character>();
-
-        
-        
+         
         if(f.exists()){
             
-            FileReader fReader = new FileReader(f);
+            
         
             int contador = 0;
             int fr;
             
-            
+            /*
 
             while((fr = fReader.read()) != -1){
                 
-                /*
+                
 
                 if(contador == 50){
 
@@ -77,7 +84,7 @@ public class FXMLLeerFicheroVelController implements Initializable {
                     }
                 }
 
-                */
+                
             
                 readChars.add((char)fr);
 
@@ -89,18 +96,35 @@ public class FXMLLeerFicheroVelController implements Initializable {
 
             }
 
+        */
+
             
         }
+        
+       
 
         
+        
+        /*
+ 
 
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidad), new EventHandler<ActionEvent>() {
             
+            File f = new File(rutaText.getText());
+            FileReader fReader = new FileReader(f);
+            BufferedReader bfReader = new BufferedReader(fReader);
             int contadorr = 0;
             
             @Override
             public void handle(ActionEvent event) {
-               leerText.setText(leerText.getText() + readChars.get(contadorr));
+                try {
+                    
+                    leerText.setText(leerText.getText() + bfReader.readLine() + "\n\r");
+                    
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLLeerFicheroVelController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
                contadorr++;
                 
             }
@@ -108,9 +132,44 @@ public class FXMLLeerFicheroVelController implements Initializable {
         }));
             
         
-        timeline.setCycleCount(readChars.size());
+        timeline.setCycleCount(totalLines);
         timeline.play();
+
+    */
+        
+        printLines();
             
+        
+        
+    }
+    
+    public void printLines() throws FileNotFoundException{
+        
+        File f = new File(rutaText.getText());
+        FileReader fReader = new FileReader(f);
+         BufferedReader bfReader = new BufferedReader(fReader);
+        
+        // Create a handler for animation
+        EventHandler<ActionEvent> eventHandler = e -> {
+            
+    
+            try {
+                leerText.setText(leerText.getText() + bfReader.readLine() + "\n\r");
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLLeerFicheroVelController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            
+    
+        };
+        
+       
+        new KeyValue(wv, f))
+        
+        Timeline animation = new Timeline(new KeyFrame(Duration.millis(1000), eventHandler));
+        animation.setCycleCount(5);
+        animation.playFromStart();
+        
         
         
     }
