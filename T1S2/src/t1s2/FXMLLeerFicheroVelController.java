@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.animation.Animation;
@@ -26,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
 import javafx.util.Duration;
 
 /**
@@ -44,110 +46,50 @@ public class FXMLLeerFicheroVelController implements Initializable {
     private TextField rutaText1;
     @FXML
     private Slider velLecturaLineas;
+    @FXML
+    private TextField caracteresText;
+    @FXML
+    private Button continuarButton;
+    
+    Boolean comp = false;
+    int contador = 0;
+    
+    
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }
     
     @FXML
-    private void handleButtonAction(ActionEvent event) throws FileNotFoundException, IOException, InterruptedException {
+    private void leer(ActionEvent event) throws FileNotFoundException, IOException, InterruptedException {
         
-        int totalLines = 0;
+        leerText.setText("");
+        
+        if(velLecturaLineas.getValue() > 0){
+
+            File f = new File(rutaText.getText());
+            FileReader fReader = new FileReader(f);
+            BufferedReader bfReader = new BufferedReader(fReader);
+
+            int totalLines = 0;
+            while(bfReader.readLine() != null){
+                totalLines++;
+            }
+
+                printLines(totalLines, (int) velLecturaLineas.getValue());
+        }else if(Integer.parseInt(caracteresText.getText()) > 0)
+            printCharacters(0);
+            
+             
+    }
+    
+    public void printLines(int totalLines, int linesPerSecond) throws FileNotFoundException, IOException{
+        
         
         File f = new File(rutaText.getText());
         FileReader fReader = new FileReader(f);
         BufferedReader bfReader = new BufferedReader(fReader);
         
-        while(bfReader.readLine() != null) {
-            totalLines++;
-        }
-        
-        int velocidad = (int) velLecturaLineas.getValue();
-         
-        if(f.exists()){
-            
-            
-        
-            int contador = 0;
-            int fr;
-            
-            /*
-
-            while((fr = fReader.read()) != -1){
-                
-                
-
-                if(contador == 50){
-
-                    leerText.setText(leerText.getText() + "Introduce una tecla para continuar");
-
-                    String leer = leerText.getText();
-
-                    while( leer.equals(leerText.getText())){
-
-                    }
-                }
-
-                
-            
-                readChars.add((char)fr);
-
-                System.out.println(Character.toString((char)fr));
-                //leerText.setText(leerText.getText() + Character.toString((char)fr));
-                contador++;
-                
-                
-
-            }
-
-        */
-
-            
-        }
-        
-       
-
-        
-        
-        /*
- 
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidad), new EventHandler<ActionEvent>() {
-            
-            File f = new File(rutaText.getText());
-            FileReader fReader = new FileReader(f);
-            BufferedReader bfReader = new BufferedReader(fReader);
-            int contadorr = 0;
-            
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    
-                    leerText.setText(leerText.getText() + bfReader.readLine() + "\n\r");
-                    
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLLeerFicheroVelController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
-               contadorr++;
-                
-            }
-            
-        }));
-            
-        
-        timeline.setCycleCount(totalLines);
-        timeline.play();
-
-    */
-        
-        printLines();
-            
-        
-        
-    }
-    
-    public void printLines() throws FileNotFoundException{
-        
-        File f = new File(rutaText.getText());
-        FileReader fReader = new FileReader(f);
-         BufferedReader bfReader = new BufferedReader(fReader);
         
         // Create a handler for animation
         EventHandler<ActionEvent> eventHandler = e -> {
@@ -162,21 +104,89 @@ public class FXMLLeerFicheroVelController implements Initializable {
             
     
         };
-        
-       
-        new KeyValue(wv, f))
-        
-        Timeline animation = new Timeline(new KeyFrame(Duration.millis(1000), eventHandler));
-        animation.setCycleCount(5);
+         
+        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(linesPerSecond), eventHandler));
+        animation.setCycleCount(totalLines);
         animation.playFromStart();
         
         
+    }
+
+
+
+    public void printCharacters(int saltar) throws FileNotFoundException, IOException, InterruptedException{
+        
+        continuarButton.setStyle("-fx-background-color: green; ");
+        
+        int caracteres = Integer.parseInt(caracteresText.getText());
+        File f = new File(rutaText.getText());
+        FileReader fReader  = new FileReader(f);
+        
+        //Salta al caracter por el que va
+        fReader.skip(saltar);
+        
+        //Define los caracteres que quedan por leer
+        int fLength = (int)f.length() - contador;
+        
+        int duration;
+        
+        //Define la duracion del timeline 
+        if(fLength >= contador)
+                duration = caracteres;
+            else{
+                duration = contador;
+            }
+            
+        contador += duration;
+    
+        
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+    
+            int fr = fReader.read();
+
+            @Override
+            public void handle(ActionEvent event) {
+
+                try {
+
+                leerText.setText(leerText.getText() + Character.toString((char)fr));
+                fr = fReader.read();
+
+
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+            }
+
+        }));
+        
+            
+            
+        timeline.setCycleCount(duration);
+        timeline.play();
+        
+    
+        timeline.setOnFinished( e -> continuarButton.setStyle("-fx-background-color: red; "));
+        
+        return ;
+    
+        }
+
+    @FXML
+    private void continuar(ActionEvent event) throws IOException, FileNotFoundException, InterruptedException {
+        
+        //Continua imprimiendo con salto de caracteres
+        printCharacters(contador);
         
     }
+
+    @FXML
+    private void guardar(ActionEvent event) {
+    }
     
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
-}
+                    
+
+    }
+
