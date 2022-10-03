@@ -76,7 +76,7 @@ public class Model {
         
         //Iteramos el array en busca de saltos de linea para añadirlo de manera independiente al array
         for(String w : words){
-            String lineWords[] = w.split("\\r\\n");
+            String lineWords[] = w.split("\\n");
             if(lineWords.length > 1){
                 finalWords.add(lineWords[0]);
                 finalWords.add("\n\r");
