@@ -10,15 +10,23 @@
 
 <AnchorPane id="AnchorPane" prefHeight="678.0" prefWidth="683.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1s2.FXMLLeerFicheroVelController">
     <children>
-        <Button fx:id="button" layoutX="56.0" layoutY="272.0" onAction="#handleButtonAction" text="Leer" />
-      <TextField fx:id="rutaText" layoutX="52.0" layoutY="42.0" prefHeight="26.0" prefWidth="311.0" promptText="Introduce la ruta del archivo" />
-      <TextArea fx:id="contenidoText" layoutX="56.0" layoutY="315.0" prefHeight="338.0" prefWidth="586.0" />
-      <TextField fx:id="rutaText1" layoutX="52.0" layoutY="78.0" prefHeight="26.0" prefWidth="311.0" promptText="Introduce la ruta del archivo de salida" />
-      <Slider fx:id="velLecturaLineas" blockIncrement="1.0" layoutX="52.0" layoutY="203.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" prefHeight="33.0" prefWidth="238.0" showTickLabels="true" snapToTicks="true" />
-      <Label layoutX="52.0" layoutY="178.0" text="Velocidad lectura lineas">
+        <Button fx:id="button" layoutX="56.0" layoutY="272.0" onAction="#leer" text="Leer" />
+      <TextField fx:id="rutaText" layoutX="52.0" layoutY="42.0" prefHeight="25.0" prefWidth="256.0" promptText="Introduce la ruta del archivo" />
+      <TextArea fx:id="leerText" layoutX="56.0" layoutY="315.0" prefHeight="200.0" prefWidth="389.0" />
+      <TextField fx:id="rutaText1" layoutX="52.0" layoutY="78.0" prefHeight="25.0" prefWidth="256.0" promptText="Introduce la ruta del archivo de salida" />
+      <Slider fx:id="velLecturaLineas" blockIncrement="1.0" layoutX="52.0" layoutY="220.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" />
+      <Label layoutX="52.0" layoutY="195.0" text="Velocidad lectura lineas">
          <font>
             <Font size="13.0" />
          </font>
       </Label>
+      <Button fx:id="continuarButton" layoutX="103.0" layoutY="272.0" onAction="#continuar" prefHeight="25.0" prefWidth="107.0" text="Continuar" />
+      <Label layoutX="54.0" layoutY="124.0" text="Leer por caracteres">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <TextField fx:id="caracteresText" layoutX="52.0" layoutY="155.0" prefHeight="25.0" prefWidth="256.0" promptText="Cantidad caracteres" />
+      <Button layoutX="225.0" layoutY="272.0" mnemonicParsing="false" onAction="#guardar" prefHeight="25.0" prefWidth="109.0" text="Guardar" />
     </children>
 </AnchorPane>
