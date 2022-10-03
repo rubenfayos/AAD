@@ -56,11 +56,14 @@ public class FXMLLeerFicheroController implements Initializable {
             velocidadLectura = Integer.parseInt(velText);
         }
         
+        long fileLength = f.length();
+        
          
-        int duration = (int) f.length() * velocidadLectura;
+        int duration = (int) fileLength;
         
         Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidadLectura), new EventHandler<ActionEvent>() {
             
+            //Crea el FileReader
             FileReader fReader  = new FileReader(f);
             int fr = fReader.read();
             
@@ -69,9 +72,11 @@ public class FXMLLeerFicheroController implements Initializable {
                
                 try {
                     
-                
+                //Imprime el texto
                 contenidoText.setText(contenidoText.getText() + Character.toString((char)fr));
                 fr = fReader.read();
+                
+               
                 
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
@@ -83,8 +88,8 @@ public class FXMLLeerFicheroController implements Initializable {
         }));
         
         //Selecciona el tiempo total
-        timeline.setCycleCount(duration);
-        timeline.play();
+        timeline.setCycleCount((int) duration);
+        timeline.playFromStart();
         
         //fReader.close();
         

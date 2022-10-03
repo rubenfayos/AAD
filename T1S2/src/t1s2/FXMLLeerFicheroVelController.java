@@ -4,6 +4,7 @@
  */
 package t1s2;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -11,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
@@ -23,6 +26,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
+import jdk.nashorn.internal.ir.BreakNode;
 
 /**
  *
@@ -35,81 +39,60 @@ public class FXMLLeerFicheroVelController implements Initializable {
     @FXML
     private TextField rutaText;
     @FXML
-    private Label leerText;
-    @FXML
     private TextField rutaText1;
     @FXML
     private Slider velLecturaLineas;
+    @FXML
+    private TextArea contenidoText;
     
     @FXML
     private void handleButtonAction(ActionEvent event) throws FileNotFoundException, IOException, InterruptedException {
         
+        contenidoText.setText("");
+        
+        //Contador de lineas
         File f = new File(rutaText.getText());
+        FileReader fReader = new FileReader(f);
+        BufferedReader bffReader = new BufferedReader(fReader);
+        
+        int lines = 0;
+        while (bffReader.readLine() != null) lines++;
+        bffReader.close();
+        
         
         
         int velocidad = (int) velLecturaLineas.getValue();
         
-        ArrayList<Character> readChars = new ArrayList<Character>();
 
+        int duration = (int) f.length();
         
-        
-        if(f.exists()){
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidad), new EventHandler<ActionEvent>() {
             
+            File f = new File(rutaText.getText());
             FileReader fReader = new FileReader(f);
-        
-            int contador = 0;
-            int fr;
-            
-            
-
-            while((fr = fReader.read()) != -1){
-                
-                /*
-
-                if(contador == 50){
-
-                    leerText.setText(leerText.getText() + "Introduce una tecla para continuar");
-
-                    String leer = leerText.getText();
-
-                    while( leer.equals(leerText.getText())){
-
-                    }
-                }
-
-                */
-            
-                readChars.add((char)fr);
-
-                System.out.println(Character.toString((char)fr));
-                //leerText.setText(leerText.getText() + Character.toString((char)fr));
-                contador++;
-                
-                
-
-            }
-
-            
-        }
-
-        
-
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
-            
-            int contadorr = 0;
+            BufferedReader bfReader = new BufferedReader(fReader);
             
             @Override
             public void handle(ActionEvent event) {
-               leerText.setText(leerText.getText() + readChars.get(contadorr));
-               contadorr++;
+               
+                try { 
+                
+                contenidoText.setText(contenidoText.getText() + bfReader.readLine() + "\n\r");
+                
+                
+                
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 
             }
             
-        }));
             
+        }));
         
-        timeline.setCycleCount(readChars.size());
-        timeline.play();
+        //Selecciona el tiempo total
+        timeline.setCycleCount(lines);
+        timeline.playFromStart();
             
         
         
