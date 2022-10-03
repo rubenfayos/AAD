@@ -12,8 +12,8 @@
     <children>
         <Button fx:id="button" layoutX="56.0" layoutY="272.0" onAction="#leer" text="Leer" />
       <TextField fx:id="rutaText" layoutX="52.0" layoutY="42.0" prefHeight="25.0" prefWidth="256.0" promptText="Introduce la ruta del archivo" />
-      <TextArea fx:id="leerText" layoutX="56.0" layoutY="315.0" prefHeight="200.0" prefWidth="389.0" />
-      <TextField fx:id="rutaText1" layoutX="52.0" layoutY="78.0" prefHeight="25.0" prefWidth="256.0" promptText="Introduce la ruta del archivo de salida" />
+      <TextArea fx:id="leerText" layoutX="56.0" layoutY="315.0" prefHeight="322.0" prefWidth="566.0" />
+      <TextField fx:id="rutaSalidaText" layoutX="52.0" layoutY="78.0" prefHeight="25.0" prefWidth="256.0" promptText="Introduce la ruta del archivo de salida" />
       <Slider fx:id="velLecturaLineas" blockIncrement="1.0" layoutX="52.0" layoutY="220.0" majorTickUnit="1.0" max="5.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" />
       <Label layoutX="52.0" layoutY="195.0" text="Velocidad lectura lineas">
          <font>

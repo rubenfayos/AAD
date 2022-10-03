@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,9 +42,14 @@ public class FXMLLeerFicheroVelController implements Initializable {
     private TextField caracteresText;
     @FXML
     private Button continuarButton;
+    @FXML
+    private Button button;
+    @FXML
+    private TextField rutaSalidaText;
     
     Boolean comp = false;
     int contador = 0;
+    
     
     
     @Override
@@ -175,9 +181,28 @@ public class FXMLLeerFicheroVelController implements Initializable {
 
     @FXML
     private void guardar(ActionEvent event) {
+        
+        String texto = leerText.getText();
+        
+        if(!texto.isEmpty()){
+            
+            File f = new File(rutaSalidaText.getText());
+        
+            try {
+
+            FileWriter fWriter = new FileWriter(f);
+            fWriter.write(texto);
+            fWriter.flush();
+            fWriter.close();
+
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLEscribirFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+     
+        }
+        
     }
     
                     
-
-    }
+}
 
