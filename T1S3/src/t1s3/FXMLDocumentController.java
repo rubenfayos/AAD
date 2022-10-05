@@ -6,33 +6,33 @@ package t1s3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import static javax.script.ScriptEngine.FILENAME;
 import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.xml.sax.SAXException;
 
+//Import para utilizar XML
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -47,8 +47,6 @@ public class FXMLDocumentController implements Initializable {
     
     private Label label;
     @FXML
-    private Button button;
-    @FXML
     private TextField inputText;
     @FXML
     private TextArea outputText;
@@ -57,80 +55,104 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField añadirAtributoText;
     @FXML
-    private Button siguienteButton;
+    private TextField rutaCrearFichero;
     
     ArrayList<Persona> personas = new ArrayList<>();
     private int position = 0;
     Persona p;
-    @FXML
-    private TextField rutaCrearFichero;
+    Alert fileAlarm = new Alert(Alert.AlertType.ERROR, "Ese documento no existe");
     
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
     @FXML
     private void readFile(ActionEvent event) throws FileNotFoundException, IOException, SAXException, ParserConfigurationException {
         
-        outputText.setText("");
+        if(!inputText.getText().isEmpty()){
         
-        Document doc = processXML(inputText.getText());
+            outputText.setText("");
 
-        NodeList list = doc.getElementsByTagName("persona");
+            //Procesa un documento para que se pueda leer como un XML
+            Document doc = processXML(inputText.getText());
 
-        //Obtiene el total de nodos del documento
-        outputText.setText("Total nodes: " + list.getLength() + "\n\r");
+            //Crea una lista con los nodos del documento
+            NodeList list = doc.getElementsByTagName("persona");
 
-        for(int i = 0; i < list.getLength(); i++){
+            //Obtiene el total de nodos del documento
+            outputText.setText("Total nodes: " + list.getLength() + "\n\r");
 
-            outputText.setText(outputText.getText() + "nodo " + (i+1) + "\n\r");
+            //Iteración de los nodos
+            for(int i = 0; i < list.getLength(); i++){
 
-            Node node = list.item(i);
+                outputText.setText(outputText.getText() + "nodo " + (i+1) + "\n\r");
 
-            //Parse de node a element
-            Element element = (Element) node;
+                //Obtiene todos los atributos del nodo
+                Node node = list.item(i);
 
-            //Crea un objeto y le añade los atributos
-            Persona p = new Persona();
+                //Convierte el nodo a element
+                Element element = (Element) node;
 
-            p.setNombre(element.getAttribute("nombre"));
-            p.setEdad(Integer.parseInt(element.getElementsByTagName("edad").item(0).getTextContent()));
-            p.setSexo(element.getElementsByTagName("sexo").item(0).getTextContent());
-            p.setAltura(Double.parseDouble(element.getElementsByTagName("altura").item(0).getTextContent()));
-            p.setPeso(Double.parseDouble(element.getElementsByTagName("peso").item(0).getTextContent()));
+                //Crea un objeto y le añade los atributos
+                Persona p = new Persona();
 
-            personas.add(p);
+                p.setNombre(element.getAttribute("nombre"));
+                p.setEdad(Integer.parseInt(element.getElementsByTagName("edad").item(0).getTextContent()));
+                p.setSexo(element.getElementsByTagName("sexo").item(0).getTextContent());
+                p.setAltura(Double.parseDouble(element.getElementsByTagName("altura").item(0).getTextContent()));
+                p.setPeso(Double.parseDouble(element.getElementsByTagName("peso").item(0).getTextContent()));
 
-            outputText.setText(outputText.getText() + "Nombre: " + p.getNombre() + "\n\r");
-            outputText.setText(outputText.getText() + "Edad: " +  p.getEdad() + "\n\r");
-            outputText.setText(outputText.getText() + "Sexo: " + p.getSexo() + "\n\r");
-            outputText.setText(outputText.getText() + "Altura: " + p.getAltura() + "\n\r");
-            outputText.setText(outputText.getText() + "Peso: " + p.getPeso() + "\n\r");
+                //Añade las personas al arraylist
+                personas.add(p);
 
-        }
-        
+                outputText.setText(outputText.getText() + "Nombre: " + p.getNombre() + "\n\r");
+                outputText.setText(outputText.getText() + "Edad: " +  p.getEdad() + "\n\r");
+                outputText.setText(outputText.getText() + "Sexo: " + p.getSexo() + "\n\r");
+                outputText.setText(outputText.getText() + "Altura: " + p.getAltura() + "\n\r");
+                outputText.setText(outputText.getText() + "Peso: " + p.getPeso() + "\n\r");
+
+            }
             
+        }else{
+            fileAlarm.showAndWait();
+            inputText.setText("");
+        }
+                  
     }
     
-    private Document processXML(String file) throws SAXException, IOException, ParserConfigurationException{
+    private Document processXML(String file){
         
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        Document doc = null;
         
-        // optional, but recommended
-        // process XML securely, avoid attacks like XML External Entities (XXE)
-        dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+        try{
+            
+            //Método para procesar un documento y convertirlo en un documento legible
+            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-        // parse XML file
-        DocumentBuilder db = dbf.newDocumentBuilder();
+            // process XML securely, avoid attacks like XML External Entities (XXE)
+            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
-        return db.parse(new File(file));
+            // parse XML file
+            DocumentBuilder db = dbf.newDocumentBuilder();
+
+            doc = db.parse(new File(file));
         
+        }   catch (ParserConfigurationException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SAXException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return doc;
     }
 
     @FXML
     private void addObject(ActionEvent event) {
+        
         
         position = 0;
         
@@ -145,46 +167,59 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void siguiente(ActionEvent event) {
         
-        if(position == 1){
-            p.setNombre(añadirAtributoText.getText());
-            atributoText.setText("Edad: ");
-        }else if (position == 2){
-            p.setEdad(Integer.parseInt(añadirAtributoText.getText()));
-            atributoText.setText("Sexo: ");
-        }else if (position == 3){
-            p.setSexo(añadirAtributoText.getText());
-            atributoText.setText("Altura: ");
-        }else if (position == 4){
-            p.setAltura(Double.parseDouble(añadirAtributoText.getText()));
-            atributoText.setText("Peso: ");
-        }else if (position == 5){
-            p.setPeso(Double.parseDouble(añadirAtributoText.getText()));
-            atributoText.setText("Objeto creado");
-            personas.add(p);
+        //Segun la posicion actual añade un atributo o otro
+        switch (position) {
+            case 1:
+                p.setNombre(añadirAtributoText.getText());
+                atributoText.setText("Edad: ");
+                break;
+            case 2:
+                p.setEdad(Integer.parseInt(añadirAtributoText.getText()));
+                atributoText.setText("Sexo: ");
+                break;
+            case 3:
+                p.setSexo(añadirAtributoText.getText());
+                atributoText.setText("Altura: ");
+                break;
+            case 4:
+                p.setAltura(Double.parseDouble(añadirAtributoText.getText()));
+                atributoText.setText("Peso: ");
+                break;
+            case 5:
+                p.setPeso(Double.parseDouble(añadirAtributoText.getText()));
+                atributoText.setText("Objeto creado");
+                personas.add(p);
+                break;
+            default:
+                break;
         }
         
         position++;
-        añadirAtributoText.setText("");
-        
+        añadirAtributoText.setText("");      
     }
 
     @FXML
     private void guardarXML(ActionEvent event) {
         
+        //Método para guardar el documento como xml     
         if(!rutaCrearFichero.getText().isEmpty()){
         
             try {
 
+                //Nos permite procesar documentos XML
                 DocumentBuilderFactory dFact = DocumentBuilderFactory.newInstance();
                 DocumentBuilder build = dFact.newDocumentBuilder();
                 Document doc = build.newDocument();
+                
+                //Define el elemento raiz y lo añade al documento
                 Element raiz = doc.createElement("personas");
                 doc.appendChild(raiz);
 
+                //Itera los objetos persona
                 for(Persona p : personas){
                     //Crea un nuevo elemento
                     Element persona = doc.createElement("persona");
-                    //Le añade el atributo al elemento
+                    //Le añade el atributo y la informacion al elemento
                     persona.setAttribute("nombre", p.getNombre());
                     //Añade el elemento a la raiz
                     raiz.appendChild(persona);
@@ -214,15 +249,18 @@ public class FXMLDocumentController implements Initializable {
 
                 }
 
+                //Clases para poder crear un XML
                 TransformerFactory tranFactory = TransformerFactory.newInstance(); // Crear serializador
                 Transformer aTransformer = tranFactory.newTransformer();
                 aTransformer.setOutputProperty(OutputKeys.ENCODING, "ISO-8859-1"); // Darle formato al documento
-                aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                aTransformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2"); //Cantidad de indentacion
                 aTransformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 DOMSource source = new DOMSource(doc);
 
-
+                outputText.setText("Fichero creado satisfactoriamente");
+                
                 try {
+                    //Crea el fichero y lo escbribe
                     FileWriter fw = new FileWriter(rutaCrearFichero.getText()); // Definir el nombre del fichero y guardar
                     StreamResult result = new StreamResult(fw);
                     aTransformer.transform(source, result);
@@ -238,7 +276,7 @@ public class FXMLDocumentController implements Initializable {
                 }
         
         }else{
-            
+            fileAlarm.showAndWait();
         }
     }
 }
