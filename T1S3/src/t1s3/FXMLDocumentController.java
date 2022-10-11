@@ -17,7 +17,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -52,24 +51,38 @@ public class FXMLDocumentController implements Initializable {
     private TextArea outputText;
     @FXML
     private Label atributoText;
-    @FXML
     private TextField añadirAtributoText;
     @FXML
     private TextField rutaCrearFichero;
+    @FXML
+    private TextField pesoText;
+    @FXML
+    private TextField alturaText;
+    @FXML
+    private TextField sexoText;
+    @FXML
+    private TextField edadText;
+    @FXML
+    private TextField nombreText;
     
-    ArrayList<Persona> personas = new ArrayList<>();
-    private int position = 0;
-    Persona p;
+    
+    ArrayList<Persona> personas;
+    //Posicion para crear objeto
     Alert fileAlarm = new Alert(Alert.AlertType.ERROR, "Ese documento no existe");
-    
+    @FXML
+    private Label resultadoText;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        
+          
     }    
 
     @FXML
     private void readFile(ActionEvent event) throws FileNotFoundException, IOException, SAXException, ParserConfigurationException {
+        
+        personas = new ArrayList<>();
         
         if(!inputText.getText().isEmpty()){
         
@@ -128,16 +141,25 @@ public class FXMLDocumentController implements Initializable {
         
         try{
             
-            //Método para procesar un documento y convertirlo en un documento legible
-            DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+            File f = new File(file);
+            
+            if(f.exists()){
+            
+                //Método para procesar un documento y convertirlo en un documento legible
+                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-            // process XML securely, avoid attacks like XML External Entities (XXE)
-            dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
+                // process XML securely, avoid attacks like XML External Entities (XXE)
+                dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 
-            // parse XML file
-            DocumentBuilder db = dbf.newDocumentBuilder();
+                // parse XML file
+                DocumentBuilder db = dbf.newDocumentBuilder();
 
-            doc = db.parse(new File(file));
+                doc = db.parse(f);
+                
+            }else{
+                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Ese fichero no existe");
+                errorAlert.showAndWait();
+            }
         
         }   catch (ParserConfigurationException ex) {
             Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -152,51 +174,45 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void addObject(ActionEvent event) {
+       
+        
+        Persona p = new Persona();
+        
+        if(!nombreText.getText().isEmpty() && !edadText.getText().isEmpty() && !sexoText.getText().isEmpty() && !alturaText.getText().isEmpty() && !pesoText.getText().isEmpty()){
+        
+            try{
+            
+            p.setNombre(nombreText.getText());
+            p.setEdad(Integer.parseInt(edadText.getText()));
+            p.setSexo(sexoText.getText());
+            p.setAltura(Double.parseDouble(alturaText.getText()));
+            p.setPeso(Double.parseDouble(pesoText.getText()));
+
+            personas.add(p);
+            
+            resultadoText.setText("Persona creada correctamente");
+            
+            nombreText.setText("");
+            edadText.setText("");
+            sexoText.setText("");
+            alturaText.setText("");
+            pesoText.setText("");
+            
+            }catch(Exception e){
+                Alert pAlert = new Alert(Alert.AlertType.ERROR, "Datos no válidos");
+                pAlert.showAndWait();
+            }
+        
+        }else{
+            Alert pAlert = new Alert(Alert.AlertType.ERROR, "Datos no válidos");
+            pAlert.showAndWait();
+        }
         
         
-        position = 0;
         
-        p = new Persona();
-        
-        atributoText.setText("Nombre: ");
-        
-        position++;
         
     }
 
-    @FXML
-    private void siguiente(ActionEvent event) {
-        
-        //Segun la posicion actual añade un atributo o otro
-        switch (position) {
-            case 1:
-                p.setNombre(añadirAtributoText.getText());
-                atributoText.setText("Edad: ");
-                break;
-            case 2:
-                p.setEdad(Integer.parseInt(añadirAtributoText.getText()));
-                atributoText.setText("Sexo: ");
-                break;
-            case 3:
-                p.setSexo(añadirAtributoText.getText());
-                atributoText.setText("Altura: ");
-                break;
-            case 4:
-                p.setAltura(Double.parseDouble(añadirAtributoText.getText()));
-                atributoText.setText("Peso: ");
-                break;
-            case 5:
-                p.setPeso(Double.parseDouble(añadirAtributoText.getText()));
-                atributoText.setText("Objeto creado");
-                personas.add(p);
-                break;
-            default:
-                break;
-        }
-        
-        position++;
-        añadirAtributoText.setText("");      
-    }
 
     @FXML
     private void guardarXML(ActionEvent event) {

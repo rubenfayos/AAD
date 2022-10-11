@@ -64,9 +64,7 @@ public class FXMLCompDirController implements Initializable {
             ae.showAndWait();
             
         }
-        
-        
-        
+              
     }
     
     @Override

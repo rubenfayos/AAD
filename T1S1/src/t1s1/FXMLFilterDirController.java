@@ -43,6 +43,8 @@ public class FXMLFilterDirController implements Initializable {
     @FXML
     private void handleButtonAction(ActionEvent event) {
         
+        DirFiles.setText("");
+        
         File f = new File(dirText.getText());
         
         String[] arrOfStr = ExtText.getText().split(";");
@@ -91,6 +93,8 @@ public class FXMLFilterDirController implements Initializable {
     
             }
             
+        }else{
+            DirFiles.setText("Ese directorio no existe");
         }
         
         

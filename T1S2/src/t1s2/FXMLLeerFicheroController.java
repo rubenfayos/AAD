@@ -17,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -44,52 +45,62 @@ public class FXMLLeerFicheroController implements Initializable {
         
         File f = new File(rutaText.getText());
         
-        String velText = velocidadText.getText();
+        if(f.exists()){
         
-        
-        //Definimos la velocidad de lectura
-        int velocidadLectura = 1;
-        if(!velText.isEmpty() && Integer.parseInt(velText) > 0){
-            velocidadLectura = Integer.parseInt(velText);
-        }
-        
-        long fileLength = f.length();
-        
-         
-        int duration = (int) fileLength;
-        
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidadLectura), new EventHandler<ActionEvent>() {
-            
-            //Crea el FileReader
-            FileReader fReader  = new FileReader(f);
-            int fr = fReader.read();
-            
-            @Override
-            public void handle(ActionEvent event) {
-               
-                try {
-                    
-                //Imprime el texto
-                contenidoText.setText(contenidoText.getText() + Character.toString((char)fr));
-                fr = fReader.read();
-                
-               
-                
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+            String velText = velocidadText.getText();
+
+
+            //Definimos la velocidad de lectura
+            int velocidadLectura = 1;
+             try{
+                if(!velText.isEmpty() && Integer.parseInt(velText) > 0){
+                    velocidadLectura = Integer.parseInt(velText);
                 }
-                
+            }catch(Exception e){
+                contenidoText.setText("Velocidad incorrecta");
             }
+
+            long fileLength = f.length();
+
+
+            int duration = (int) fileLength;
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(velocidadLectura), new EventHandler<ActionEvent>() {
+
+                //Crea el FileReader
+                FileReader fReader  = new FileReader(f);
+                int fr = fReader.read();
+
+                @Override
+                public void handle(ActionEvent event) {
+
+                    try {
+
+                    //Imprime el texto
+                    contenidoText.setText(contenidoText.getText() + Character.toString((char)fr));
+                    fr = fReader.read();
+
+
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+
+            }));
+
+            //Selecciona el tiempo total
+            timeline.setCycleCount((int) duration);
+            timeline.playFromStart();
+
+            //fReader.close();
             
-            
-        }));
-        
-        //Selecciona el tiempo total
-        timeline.setCycleCount((int) duration);
-        timeline.playFromStart();
-        
-        //fReader.close();
-        
+        }else{
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Ese fichero no existe");
+            errorAlert.showAndWait();
+        }
         
     }
     

@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
@@ -62,17 +63,21 @@ public class FXMLLeerFicheroVelController implements Initializable {
         
         leerText.setText("");
         
+        //Comprueba si hay velocidad de lectura en las líneas
         if(velLecturaLineas.getValue() > 0){
 
+            //Crea el file
             File f = new File(rutaText.getText());
             FileReader fReader = new FileReader(f);
             BufferedReader bfReader = new BufferedReader(fReader);
 
+            //Cuenta las líneas
             int totalLines = 0;
             while(bfReader.readLine() != null){
                 totalLines++;
             }
 
+                //Funcion de leer líneas
                 printLines(totalLines, (int) velLecturaLineas.getValue());
         }else if(Integer.parseInt(caracteresText.getText()) > 0)
             printCharacters(0);
@@ -84,29 +89,34 @@ public class FXMLLeerFicheroVelController implements Initializable {
         
         
         File f = new File(rutaText.getText());
-        FileReader fReader = new FileReader(f);
-        BufferedReader bfReader = new BufferedReader(fReader);
-        
-        
-        // Create a handler for animation
-        EventHandler<ActionEvent> eventHandler = e -> {
+        if(f.exists()){
+            FileReader fReader = new FileReader(f);
+            BufferedReader bfReader = new BufferedReader(fReader);
+
+
+            // Create a handler for animation
+            EventHandler<ActionEvent> eventHandler = e -> {
+
+
+                try {
+                    leerText.setText(leerText.getText() + bfReader.readLine() + "\n\r");
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLLeerFicheroVelController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+
+
+            };
+
+            Timeline animation = new Timeline(new KeyFrame(Duration.seconds(linesPerSecond), eventHandler));
+            animation.setCycleCount(totalLines);
+            animation.playFromStart();
             
-    
-            try {
-                leerText.setText(leerText.getText() + bfReader.readLine() + "\n\r");
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLLeerFicheroVelController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        }else{
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Ese fichero no existe");
+            errorAlert.showAndWait(); 
+        }
             
-            
-    
-        };
-         
-        Timeline animation = new Timeline(new KeyFrame(Duration.seconds(linesPerSecond), eventHandler));
-        animation.setCycleCount(totalLines);
-        animation.playFromStart();
-        
-        
     }
 
 
@@ -117,56 +127,59 @@ public class FXMLLeerFicheroVelController implements Initializable {
         
         int caracteres = Integer.parseInt(caracteresText.getText());
         File f = new File(rutaText.getText());
-        FileReader fReader  = new FileReader(f);
-        
-        //Salta al caracter por el que va
-        fReader.skip(saltar);
-        
-        //Define los caracteres que quedan por leer
-        int fLength = (int)f.length() - contador;
-        
-        int duration;
-        
-        //Define la duracion del timeline 
-        if(fLength >= contador)
-                duration = caracteres;
-            else{
-                duration = contador;
-            }
-            
-        contador += duration;
-    
-        
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+        if(f.exists()){
+            FileReader fReader  = new FileReader(f);
 
-    
-            int fr = fReader.read();
+            //Salta al caracter por el que va
+            fReader.skip(saltar);
 
-            @Override
-            public void handle(ActionEvent event) {
+            //Define los caracteres que quedan por leer
+            int fLength = (int)f.length() - contador;
 
-                try {
+            int duration;
 
-                leerText.setText(leerText.getText() + Character.toString((char)fr));
-                fr = fReader.read();
-
-
-                } catch (IOException ex) {
-                    Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+            //Define la duracion del timeline 
+            if(fLength >= contador)
+                    duration = caracteres;
+                else{
+                    duration = contador;
                 }
 
-            }
+            contador += duration;
 
-        }));
-        
+
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), new EventHandler<ActionEvent>() {
+
+
+                int fr = fReader.read();
+
+                @Override
+                public void handle(ActionEvent event) {
+
+                    try {
+
+                    leerText.setText(leerText.getText() + Character.toString((char)fr));
+                    fr = fReader.read();
+
+
+                    } catch (IOException ex) {
+                        Logger.getLogger(FXMLLeerFicheroController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+
+            }));
+
+
+
+            timeline.setCycleCount(duration);
+            timeline.play();
+            timeline.setOnFinished( e -> continuarButton.setStyle("-fx-background-color: red; "));
             
-            
-        timeline.setCycleCount(duration);
-        timeline.play();
-        
-    
-        timeline.setOnFinished( e -> continuarButton.setStyle("-fx-background-color: red; "));
-        
+        }else{
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Ese fichero no existe");
+            errorAlert.showAndWait();
+        }
         return ;
     
         }
