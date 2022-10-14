@@ -94,39 +94,10 @@ public class FXMLDocumentController implements Initializable {
             //Crea una lista con los nodos del documento
             NodeList list = doc.getElementsByTagName("persona");
 
-            //Obtiene el total de nodos del documento
-            outputText.setText("Total nodes: " + list.getLength() + "\n\r");
-
-            //Iteración de los nodos
-            for(int i = 0; i < list.getLength(); i++){
-
-                outputText.setText(outputText.getText() + "nodo " + (i+1) + "\n\r");
-
-                //Obtiene todos los atributos del nodo
-                Node node = list.item(i);
-
-                //Convierte el nodo a element
-                Element element = (Element) node;
-
-                //Crea un objeto y le añade los atributos
-                Persona p = new Persona();
-
-                p.setNombre(element.getAttribute("nombre"));
-                p.setEdad(Integer.parseInt(element.getElementsByTagName("edad").item(0).getTextContent()));
-                p.setSexo(element.getElementsByTagName("sexo").item(0).getTextContent());
-                p.setAltura(Double.parseDouble(element.getElementsByTagName("altura").item(0).getTextContent()));
-                p.setPeso(Double.parseDouble(element.getElementsByTagName("peso").item(0).getTextContent()));
-
-                //Añade las personas al arraylist
-                personas.add(p);
-
-                outputText.setText(outputText.getText() + "Nombre: " + p.getNombre() + "\n\r");
-                outputText.setText(outputText.getText() + "Edad: " +  p.getEdad() + "\n\r");
-                outputText.setText(outputText.getText() + "Sexo: " + p.getSexo() + "\n\r");
-                outputText.setText(outputText.getText() + "Altura: " + p.getAltura() + "\n\r");
-                outputText.setText(outputText.getText() + "Peso: " + p.getPeso() + "\n\r");
-
-            }
+            //Lee los nodos del elemento
+            readNodeList(list);
+            //Muestra la lista
+            showList();
             
         }else{
             fileAlarm.showAndWait();
@@ -134,6 +105,57 @@ public class FXMLDocumentController implements Initializable {
         }
                   
     }
+    
+    private void readNodeList(NodeList list){
+        
+        //Obtiene el total de nodos del documento
+        outputText.setText("Total nodes: " + list.getLength() + "\n\r");
+        
+        //Iteración de los nodos
+        for(int i = 0; i < list.getLength(); i++){
+            
+            //Obtiene todos los atributos del nodo
+            Node node = list.item(i);
+
+            //Convierte el nodo a element
+            Element element = (Element) node;
+
+            //Crea un objeto y le añade los atributos
+            Persona p = new Persona();
+
+            p.setNombre(element.getAttribute("nombre"));
+            p.setEdad(Integer.parseInt(element.getElementsByTagName("edad").item(0).getTextContent()));
+            p.setSexo(element.getElementsByTagName("sexo").item(0).getTextContent());
+            p.setAltura(Double.parseDouble(element.getElementsByTagName("altura").item(0).getTextContent()));
+            p.setPeso(Double.parseDouble(element.getElementsByTagName("peso").item(0).getTextContent()));
+       
+
+            //Añade las personas al arraylist
+            personas.add(p);
+        }
+    }
+    
+    private void showList(){
+        
+        //Muestra todos los nodos disponibles
+        
+        outputText.setText("");
+        
+        for(int i = 0; i < personas.size(); i++){
+            
+            outputText.setText(outputText.getText() + "nodo " + (i+1) + "\n\r");
+
+            Persona p = personas.get(i);
+
+            outputText.setText(outputText.getText() + "Nombre: " + p.getNombre() + "\n\r");
+            outputText.setText(outputText.getText() + "Edad: " +  p.getEdad() + "\n\r");
+            outputText.setText(outputText.getText() + "Sexo: " + p.getSexo() + "\n\r");
+            outputText.setText(outputText.getText() + "Altura: " + p.getAltura() + "\n\r");
+            outputText.setText(outputText.getText() + "Peso: " + p.getPeso() + "\n\r");
+        
+        }
+    }
+    
     
     private Document processXML(String file){
         
@@ -198,6 +220,8 @@ public class FXMLDocumentController implements Initializable {
             alturaText.setText("");
             pesoText.setText("");
             
+            showList();
+            
             }catch(Exception e){
                 Alert pAlert = new Alert(Alert.AlertType.ERROR, "Datos no válidos");
                 pAlert.showAndWait();
@@ -208,9 +232,7 @@ public class FXMLDocumentController implements Initializable {
             pAlert.showAndWait();
         }
         
-        
-        
-        
+    
     }
 
 

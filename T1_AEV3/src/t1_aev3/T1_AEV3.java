@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML.java to edit this template
  */
 
+package t1_aev3;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,6 +15,7 @@ import javafx.stage.Stage;
  *
  * @author DAM 2
  */
+
 public class T1_AEV3 extends Application {
     
     @Override
