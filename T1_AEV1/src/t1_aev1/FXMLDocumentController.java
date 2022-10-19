@@ -176,6 +176,9 @@ public class FXMLDocumentController implements Initializable {
                 leerText.setText("");
                 leerText.setText("Se ha creado " + newFile.getAbsolutePath() + ".");
                 
+                fw.flush();
+                fw.close();
+                
             }
             
         }else{

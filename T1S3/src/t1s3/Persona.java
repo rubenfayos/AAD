@@ -6,7 +6,7 @@ package t1s3;
 
 /**
  *
- * @author DAM 2
+ * @author Rubén Fayos
  */
 public class Persona {
     

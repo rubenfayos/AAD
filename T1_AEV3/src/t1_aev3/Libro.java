@@ -65,20 +65,5 @@ public class Libro {
     public void setEditorial(String editorial) {
         this.editorial = editorial;
     }
-    
-    
-    /*
-    
-    public Libro recuperarLibro(int id){
-        
-        
-        
-        
-    }
-
-    */
-    
-    
-    
-    
+       
 }

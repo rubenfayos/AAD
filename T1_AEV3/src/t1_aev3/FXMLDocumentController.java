@@ -5,10 +5,8 @@
 
 package t1_aev3;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,15 +15,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javax.xml.XMLConstants;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  *
@@ -49,101 +38,46 @@ public class FXMLDocumentController implements Initializable {
     private TextField añoLibro;
     @FXML
     private TextField editorialLibro;
-    
-    ArrayList<Libro> libros;
-    Biblioteca biblioteca;
     @FXML
     private TextField paginasLibro;
+    @FXML
+    private TextField nuevaIDLibro;
+    @FXML
+    private TextField XMLSalida;
+    
+    Map<Integer, Libro> libros;
+    Biblioteca biblioteca;
 
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        biblioteca = new Biblioteca();
     }    
 
     @FXML
     private void cargarXML(ActionEvent event) {
         
-        libros = new ArrayList<>();
-        
-        if(!rutaText.getText().isEmpty()){
-        
-            salidaText.setText("");
+        //Carga el XML
+        if(rutaText.getText().isEmpty()){
+            Alert file = new Alert(Alert.AlertType.ERROR, "No has introducido el fichero");
+            file.showAndWait();
+        }else{
+            salidaText.setText(biblioteca.cargarXML(rutaText.getText()));
 
-            //Procesa un documento para que se pueda leer como un XML
-            Document doc = processXML(rutaText.getText());
-            
-            NodeList list = doc.getElementsByTagName("libro");
-            
-            salidaText.setText("Total libros: " + list.getLength() + "\n\r");
-            
-            //Iteración de los nodos
-            for(int i = 0; i < list.getLength(); i++){
-
-                //Obtiene todos los atributos del nodo
-                Node node = list.item(i);
-
-                //Convierte el nodo a element
-                Element element = (Element) node;
-                
-                Libro l = new Libro();
-                
-                l.setId(Integer.parseInt(element.getAttribute("id")));
-                l.setTitulo(element.getElementsByTagName("titulo").item(0).getTextContent());
-                l.setAutor(element.getElementsByTagName("autor").item(0).getTextContent());
-                l.setEditorial(element.getElementsByTagName("editorial").item(0).getTextContent());
-                l.setAñoPublicacion(Integer.parseInt(element.getElementsByTagName("añoPublicacion").item(0).getTextContent()));
-                l.setPaginas(Integer.parseInt(element.getElementsByTagName("paginas").item(0).getTextContent()));
-                
-                libros.add(l);
-                salidaText.setText("Documento cargado correctamente");
-            
-            }
-            
-            biblioteca = new Biblioteca(libros);
-            
         }
-        
-    }
-    
-    private Document processXML(String file){
-        
-        Document doc = null;
-        
-        try{
-            
-            File f = new File(file);
-            
-            if(f.exists()){
-            
-                //Método para procesar un documento y convertirlo en un documento legible
-                DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-
-                // process XML securely, avoid attacks like XML External Entities (XXE)
-                dbf.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
-
-                // parse XML file
-                DocumentBuilder db = dbf.newDocumentBuilder();
-
-                doc = db.parse(f);
-                
-            }else{
-                Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Ese fichero no existe");
-                errorAlert.showAndWait();
-            }
-        
-        }   catch (ParserConfigurationException | SAXException | IOException e) {
-            salidaText.setText("Algo ha fallado");
-        } 
-        
-        return doc;
+          
     }
 
     @FXML
     private void MostrarLibros(ActionEvent event) {
         
-        salidaText.setText(biblioteca.mostrarLibros());
-        
+        //Muestra todos los libros
+        if(biblioteca == null){
+            salidaText.setText("No hay ningún libro");
+        }else{
+            salidaText.setText(biblioteca.mostrarLibros());
+        }
+           
     }
 
     @FXML
@@ -158,18 +92,111 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void CrearLibro(ActionEvent event) {
         
-        Libro l = new Libro();
-        l.setId(Integer.parseInt(idLibro.getText()));
-        l.setTitulo(tituloLibro.getText());
-        l.setAutor(autorLibro.getText());
-        l.setEditorial(editorialLibro.getText());
-        l.setAñoPublicacion(Integer.parseInt(añoLibro.getText()));
-        l.setPaginas(Integer.parseInt(paginasLibro.getText()));
+        //Comprueba que todos los campos estén introducidos
+        if(idLibro.getText().isEmpty() || tituloLibro.getText().isEmpty() || autorLibro.getText().isEmpty() || editorialLibro.getText().isEmpty() || añoLibro.getText().isEmpty() || paginasLibro.getText().isEmpty()){
+            
+            Alert errorA = new Alert(Alert.AlertType.ERROR, "Falta por introducir algún campo");
+            errorA.showAndWait();
+            
+        }else{
         
-        biblioteca.crearLibro(l);
+            //Crea un nuevo libro
+            Libro l = new Libro();
+            l.setId(Integer.parseInt(idLibro.getText()));
+            l.setTitulo(tituloLibro.getText());
+            l.setAutor(autorLibro.getText());
+            l.setEditorial(editorialLibro.getText());
+            l.setAñoPublicacion(Integer.parseInt(añoLibro.getText()));
+            l.setPaginas(Integer.parseInt(paginasLibro.getText()));
+
+            //Añade el libro a la biblioteca
+            if(biblioteca.crearLibro(l.getId(), l) > 0){
+                Alert conf = new Alert(Alert.AlertType.CONFIRMATION, "Libro creado correctamente");
+                conf.showAndWait();
+                limpiar();
+            }
+        
+        }
+        
+    }
+
+    @FXML
+    private void actualizarLibro(ActionEvent event) {
+        
+        //Comprueba que el id esté introducido
+        if(!idLibro.getText().isEmpty()){
+            Libro l = biblioteca.buscarLibro(Integer.parseInt(idLibro.getText()));
+            
+            //Comprueba que el libro exista
+            if(l == null){
+                Alert error = new Alert(Alert.AlertType.INFORMATION, "Ese libro no existe o no se ha encontrado"); 
+            }else{
+        
+                if(!nuevaIDLibro.getText().isEmpty())
+                    l.setId(Integer.parseInt(nuevaIDLibro.getText()));
+                if(!tituloLibro.getText().isEmpty())
+                    l.setTitulo(tituloLibro.getText());
+                if(!autorLibro.getText().isEmpty())
+                    l.setAutor(autorLibro.getText());
+                if(!editorialLibro.getText().isEmpty())
+                    l.setEditorial(editorialLibro.getText());
+                if(!añoLibro.getText().isEmpty())
+                    l.setAñoPublicacion(Integer.parseInt(añoLibro.getText()));
+                if(!paginasLibro.getText().isEmpty())
+                    l.setPaginas(Integer.parseInt(paginasLibro.getText()));
+                
+                Alert eliminar = new Alert(Alert.AlertType.INFORMATION, "Libro actualizado correctamente");
+                limpiar();
+            }
+            
+            //Edita el libros
+            biblioteca.editarLibro(Integer.parseInt(idLibro.getText()), l);
+            
+        }else{
+            Alert libroAlert = new Alert(Alert.AlertType.ERROR, "No has introducido ningún campo");
+            libroAlert.showAndWait();
+        }
+               
+    }
+
+    @FXML
+    private void eliminarLibro(ActionEvent event) {
+        
+        //Elimina el libro
+        if(!idLibro.getText().isEmpty()){
+            if(biblioteca.eliminarLibro(Integer.parseInt(idLibro.getText())) == 1){
+                Alert eliminar = new Alert(Alert.AlertType.INFORMATION, "Libro eliminado correctamente");
+                limpiar();
+            }else{
+                Alert error = new Alert(Alert.AlertType.INFORMATION, "Ese libro no existe o no se ha encontrado"); 
+            }
+        
+        }
+        
+    }
+
+    @FXML
+    private void guardarXML(ActionEvent event) {
+        
+        //Guarda el xml
+        if(XMLSalida.getText().isEmpty()){
+            Alert file = new Alert(Alert.AlertType.ERROR, "No has introducido el fichero de salida");
+            file.showAndWait();
+        }else if(biblioteca != null){
+            salidaText.setText(biblioteca.guardarXML(XMLSalida.getText()));
+        }
+    }
+    
+     private void limpiar(){
+        
+        //limpia el texto
+        tituloLibro.setText("");
+        autorLibro.setText("");
+        editorialLibro.setText("");
+        añoLibro.setText("");
+        paginasLibro.setText("");
         
     }
     
-    
-    
+     
 }

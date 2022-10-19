@@ -4,10 +4,12 @@
  */
 package t1s3;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -40,7 +42,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author DAM 2
+ * @author Rubén Fayos
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -74,9 +76,7 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
-        
-          
+              
     }    
 
     @FXML
@@ -137,8 +137,7 @@ public class FXMLDocumentController implements Initializable {
     
     private void showList(){
         
-        //Muestra todos los nodos disponibles
-        
+        //Muestra todos la información de cada nodo  
         outputText.setText("");
         
         for(int i = 0; i < personas.size(); i++){
@@ -159,6 +158,8 @@ public class FXMLDocumentController implements Initializable {
     
     private Document processXML(String file){
         
+        
+        //Procesa un documento XML
         Document doc = null;
         
         try{
@@ -197,6 +198,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void addObject(ActionEvent event) {
        
+        //Añadir un objeto
         
         Persona p = new Persona();
         
@@ -299,10 +301,11 @@ public class FXMLDocumentController implements Initializable {
                 
                 try {
                     //Crea el fichero y lo escbribe
-                    FileWriter fw = new FileWriter(rutaCrearFichero.getText()); // Definir el nombre del fichero y guardar
-                    StreamResult result = new StreamResult(fw);
+                    File f = new File(rutaCrearFichero.getText());
+                    BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f), "UTF-8")); // Definir el nombre del fichero y guardar
+                    StreamResult result = new StreamResult(wr);
                     aTransformer.transform(source, result);
-                    fw.close();
+                    wr.close();
                  } catch (IOException e) {
                     e.printStackTrace();
                 }
