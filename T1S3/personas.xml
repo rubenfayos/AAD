@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<personas>
+		<persona nombre="Rubén Fayos">
+			<edad>19</edad>
+			<sexo>hombre</sexo>
+			<altura>1.73</altura>
+			<peso>70</peso>
+		</persona>
+		<persona nombre = "María">
+			<edad>17</edad>
+			<sexo>mujer</sexo>
+			<altura>1.60</altura>
+			<peso>52</peso>
+		</persona>
+	</personas>

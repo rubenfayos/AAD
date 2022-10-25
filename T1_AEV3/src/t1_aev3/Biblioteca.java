@@ -48,13 +48,16 @@ public class Biblioteca {
     }
     
     
-    public int crearLibro(int id, Libro l) throws SAXException, IOException, FileNotFoundException, ParserConfigurationException{
+    public int crearLibro(int id, Libro l){
         
-        libros.put(id, l);
-        
-        añadirLibro("C:\\Users\\DAM 2\\DocumentosPrueba\\libros.xml", l);
+        if(!libros.containsKey(id)){
+            
+            libros.put(id, l);
 
-        return id;
+            return id;
+        }
+        
+        return 0;
         
     }
     
@@ -281,55 +284,6 @@ public class Biblioteca {
         
         return salida;
         
-    }
-    
-    public void añadirLibro(String fichero, Libro l) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
-        
-    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
-
-    /* parse existing file to DOM */
-    Document doc = documentBuilder.parse(new File(fichero));
-
-    Element root = doc.getDocumentElement();
-    
-    //Crea un nuevo elemento
-    Element libro = doc.createElement("libro");
-    //Le añade el atributo y la informacion al elemento
-    libro.setAttribute("id", String.valueOf(l.getId()));
-    //Añade el elemento a la raiz
-    libro.appendChild(libro);
-
-    //Crea el atributo titulo
-    Element titulo = doc.createElement("titulo");
-    //Le añade el texto al atributo
-    titulo.appendChild(doc.createTextNode(l.getTitulo()));
-    //Añade el atributo a libro
-    libro.appendChild(titulo);
-
-    //Elemento autor
-    Element autor = doc.createElement("autor");
-    autor.appendChild(doc.createTextNode(l.getAutor()));
-    libro.appendChild(autor);
-
-    //Elemento editorial
-    Element editorial = doc.createElement("editorial");
-    editorial.appendChild(doc.createTextNode(l.getEditorial()));
-    libro.appendChild(editorial);
-
-    //Elemento año publicacion
-    Element añoPublicacion = doc.createElement("añoPublicacion");
-    añoPublicacion.appendChild(doc.createTextNode(String.valueOf(l.getAñoPublicacion())));
-    libro.appendChild(añoPublicacion);
-
-    //Elemento páginas
-    Element paginas = doc.createElement("paginas");
-    paginas.appendChild(doc.createTextNode(String.valueOf(l.getPaginas())));
-    libro.appendChild(paginas);
-    
-    
-        
-    }
-    
+    } 
     
 }

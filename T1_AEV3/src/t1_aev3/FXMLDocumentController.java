@@ -130,6 +130,7 @@ public class FXMLDocumentController implements Initializable {
             //Comprueba que el libro exista
             if(l == null){
                 Alert error = new Alert(Alert.AlertType.INFORMATION, "Ese libro no existe o no se ha encontrado"); 
+                error.showAndWait();
             }else{
         
                 if(!nuevaIDLibro.getText().isEmpty())
@@ -145,13 +146,14 @@ public class FXMLDocumentController implements Initializable {
                 if(!paginasLibro.getText().isEmpty())
                     l.setPaginas(Integer.parseInt(paginasLibro.getText()));
                 
-                Alert eliminar = new Alert(Alert.AlertType.INFORMATION, "Libro actualizado correctamente");
+                //Edita el libros
+                biblioteca.editarLibro(Integer.parseInt(idLibro.getText()), l);
+                
+                Alert actualizar = new Alert(Alert.AlertType.INFORMATION, "Libro actualizado correctamente");
+                actualizar.showAndWait();
                 limpiar();
             }
-            
-            //Edita el libros
-            biblioteca.editarLibro(Integer.parseInt(idLibro.getText()), l);
-            
+      
         }else{
             Alert libroAlert = new Alert(Alert.AlertType.ERROR, "No has introducido ningún campo");
             libroAlert.showAndWait();
@@ -166,9 +168,11 @@ public class FXMLDocumentController implements Initializable {
         if(!idLibro.getText().isEmpty()){
             if(biblioteca.eliminarLibro(Integer.parseInt(idLibro.getText())) == 1){
                 Alert eliminar = new Alert(Alert.AlertType.INFORMATION, "Libro eliminado correctamente");
+                eliminar.showAndWait();
                 limpiar();
             }else{
-                Alert error = new Alert(Alert.AlertType.INFORMATION, "Ese libro no existe o no se ha encontrado"); 
+                Alert error = new Alert(Alert.AlertType.ERROR, "Ese libro no existe o no se ha encontrado"); 
+                error.showAndWait();
             }
         
         }
