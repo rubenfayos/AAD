@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author DAM 2
+ * @author Ruben Fayos
  */
 
 public class T1_AEV3 extends Application {

@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 
 /**
  *
- * @author DAM 2
+ * @author Ruben Fayos
  */
 public class FXMLDocumentController implements Initializable {
     
@@ -75,7 +75,7 @@ public class FXMLDocumentController implements Initializable {
         if(biblioteca == null){
             salidaText.setText("No hay ningún libro");
         }else{
-            salidaText.setText(biblioteca.mostrarLibros());
+            salidaText.setText(biblioteca.mostrarTitulos());
         }
            
     }
@@ -114,6 +114,9 @@ public class FXMLDocumentController implements Initializable {
                 Alert conf = new Alert(Alert.AlertType.CONFIRMATION, "Libro creado correctamente");
                 conf.showAndWait();
                 limpiar();
+            }else{
+                Alert error = new Alert(Alert.AlertType.ERROR, "Ese libro ya existe");
+                error.showAndWait();
             }
         
         }

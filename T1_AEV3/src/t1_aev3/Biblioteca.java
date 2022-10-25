@@ -37,7 +37,7 @@ import org.xml.sax.SAXException;
 
 /**
  *
- * @author DAM 2
+ * @author Ruben Fayos
  */
 public class Biblioteca {
     
@@ -77,8 +77,9 @@ public class Biblioteca {
         return info;
         
     }
+
     
-    public String mostrarLibros(){
+    public String mostrarTitulos(){
         
         String infoLibros = "";
         
@@ -89,14 +90,13 @@ public class Biblioteca {
             
         for(Libro l : libros.values()){
             
-            infoLibros += mostrarLibro(l);
+            infoLibros += "ID) " + l.getId() + ", Titulo) " + l.getTitulo() + "\n";
             
         }
         
         return infoLibros;
         
         }
-        
     }
     
     public Libro buscarLibro(int id){

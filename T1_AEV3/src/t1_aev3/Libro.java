@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author DAM 2
+ * @author Ruben Fayos
  */
 public class Libro {
     
