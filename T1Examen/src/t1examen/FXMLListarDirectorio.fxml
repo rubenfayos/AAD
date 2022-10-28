@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="t1examen.FXMLListarDirectorioController">
+   <children>
+      <Label layoutX="164.0" layoutY="68.0" text="Path">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="pathText" layoutX="221.0" layoutY="65.0" prefHeight="26.0" prefWidth="250.0" text="C:\HolaMundo\" />
+      <Button layoutX="278.0" layoutY="126.0" mnemonicParsing="false" onAction="#Listar" text="Listar" />
+      <TextArea fx:id="outputText" layoutY="200.0" prefHeight="200.0" prefWidth="600.0" />
+   </children>
+</AnchorPane>

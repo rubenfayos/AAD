@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1s4.FXMLInsertController">
+   <children>
+      <TextField fx:id="nombreText" layoutX="225.0" layoutY="144.0" prefHeight="26.0" prefWidth="250.0" promptText="Nombre" />
+      <TextField fx:id="edadText" layoutX="225.0" layoutY="180.0" prefHeight="26.0" prefWidth="120.0" promptText="Edad" />
+      <TextField fx:id="alturaText" layoutX="355.0" layoutY="216.0" prefHeight="26.0" prefWidth="120.0" promptText="Altura" />
+      <TextField fx:id="pesoText" layoutX="355.0" layoutY="180.0" prefHeight="26.0" prefWidth="120.0" promptText="Peso" />
+      <ComboBox fx:id="SexoComboBox" layoutX="225.0" layoutY="216.0" prefHeight="26.0" prefWidth="120.0" promptText="Sexo" />
+      <Label layoutX="283.0" layoutY="89.0" text="Añadir persona">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button layoutX="329.0" layoutY="286.0" mnemonicParsing="false" onAction="#Insert" text="Añadir" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="scene" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1examen.FXMLDocumentController">
+    <children>
+        <Button fx:id="button" layoutX="172.0" layoutY="110.0" onAction="#switchCrearDirectorio" text="Crear directorio y ficheros">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
+      <Button fx:id="button1" layoutX="170.0" layoutY="180.0" onAction="#switchListarDirectorio" text="Listar contenido directorio">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button layoutX="147.0" layoutY="259.0" onAction="#BorrarFicheros" text="Borrar ficheros">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Button>
+      <TextField fx:id="borrarText" layoutX="294.0" layoutY="262.0" prefHeight="26.0" prefWidth="159.0" text="C:\HolaMundo\" />
+    </children>
+</AnchorPane>
