@@ -10,51 +10,68 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="681.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="t1aev4.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="637.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev4.FXMLDocumentController">
     <children>
-        <Button layoutX="410.0" layoutY="46.0" onAction="#read" text="Leer">
+        <Button layoutX="490.0" layoutY="46.0" onAction="#read" text="Leer">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <TextField fx:id="rutaText" layoutX="57.0" layoutY="48.0" prefHeight="25.0" prefWidth="333.0" promptText="Ruta del archivo" />
-      <TableView layoutX="57.0" layoutY="108.0" prefHeight="300.0" prefWidth="560.0">
+      <TextField fx:id="rutaText" layoutX="28.0" layoutY="48.0" prefHeight="26.0" prefWidth="450.0" promptText="Ruta del archivo" />
+      <Label layoutX="28.0" layoutY="438.0" text="Realizar consulta">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <ChoiceBox fx:id="campoComboBox" layoutX="28.0" layoutY="500.0" prefWidth="150.0" />
+      <Label layoutX="28.0" layoutY="470.0" text="campo">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <CheckBox fx:id="checkboxIgual" layoutX="251.0" layoutY="498.0" mnemonicParsing="false" text="=" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font></CheckBox>
+      <CheckBox fx:id="checkboxMenor" layoutX="251.0" layoutY="536.0" mnemonicParsing="false" text="&lt;" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font></CheckBox>
+      <Label layoutX="28.0" layoutY="550.0" prefHeight="25.0" prefWidth="137.0" text="Consulta manual">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+      <TextField fx:id="consultaManualText" layoutX="29.0" layoutY="582.0" prefHeight="25.0" prefWidth="439.0" text="SELECT * FROM libros WHERE añoNacimiento &gt; 1950 " />
+      <Button layoutX="513.0" layoutY="580.0" mnemonicParsing="false" onAction="#consultaManual" text="consultar">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="513.0" layoutY="498.0" mnemonicParsing="false" onAction="#consultaEstandar" text="consultar">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button layoutX="28.0" layoutY="89.0" onAction="#consulta" prefHeight="26.0" prefWidth="60.0" text="Consulta">
+         <font>
+            <Font size="11.0" />
+         </font>
+      </Button>
+      <TableView fx:id="table" layoutX="27.0" layoutY="128.0" prefHeight="300.0" prefWidth="779.0">
         <columns>
-          <TableColumn fx:id="tituloColumn" prefWidth="75.0" text="Título" />
-          <TableColumn fx:id="autorColumn" prefWidth="75.0" text="Autor" />
-            <TableColumn fx:id="añoNacimientoColumn" prefWidth="120.0" text="Año nacimiento" />
-            <TableColumn fx:id="añoPublicacionColumn" prefWidth="117.0" text="Año publicacion" />
-            <TableColumn fx:id="editorialColumn" minWidth="0.0" prefWidth="89.0" text="Editorial" />
-            <TableColumn fx:id="paginasColumn" prefWidth="83.0" text="Páginas" />
+          <TableColumn fx:id="tituloColumn" prefWidth="210.39995956420898" text="Título" />
+          <TableColumn fx:id="autorColumn" prefWidth="159.20005798339844" text="Autor" />
+            <TableColumn fx:id="añoNacimientoColumn" prefWidth="99.199951171875" text="Año nacimiento" />
+            <TableColumn fx:id="añoPublicacionColumn" minWidth="6.0" prefWidth="99.20001220703125" text="Año publicacion" />
+            <TableColumn fx:id="editorialColumn" minWidth="0.0" prefWidth="120.80010986328125" text="Editorial" />
+            <TableColumn fx:id="paginasColumn" prefWidth="61.5999755859375" text="Páginas" />
         </columns>
       </TableView>
-      <Label layoutX="57.0" layoutY="428.0" text="Realizar consulta">
+      <CheckBox fx:id="checkboxMayor" layoutX="253.0" layoutY="457.0" mnemonicParsing="false" text="&gt;" visible="false">
          <font>
-            <Font name="System Bold" size="16.0" />
+            <Font size="17.0" />
          </font>
-      </Label>
-      <ChoiceBox layoutX="57.0" layoutY="490.0" prefWidth="150.0" />
-      <Label layoutX="57.0" layoutY="460.0" text="campo">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <CheckBox layoutX="390.0" layoutY="472.0" mnemonicParsing="false" text="CheckBox" />
-      <CheckBox layoutX="390.0" layoutY="494.0" mnemonicParsing="false" text="CheckBox" />
-      <Label layoutX="57.0" layoutY="540.0" prefHeight="25.0" prefWidth="137.0" text="Consulta manual">
-         <font>
-            <Font name="System Bold" size="16.0" />
-         </font>
-      </Label>
-      <TextField layoutX="58.0" layoutY="572.0" prefHeight="25.0" prefWidth="439.0" />
-      <Button layoutX="542.0" layoutY="570.0" mnemonicParsing="false" text="consultar">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <Button layoutX="542.0" layoutY="479.0" mnemonicParsing="false" text="consultar">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
+      </CheckBox>
+      <TextField fx:id="consultaText" layoutX="373.0" layoutY="499.0" prefHeight="26.0" prefWidth="88.0" />
     </children>
 </AnchorPane>

@@ -19,6 +19,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -51,9 +53,9 @@ public class Model {
         
     }
     
-    public ArrayList<Libro> consulta(){
+    public ObservableList<Libro> consulta(){
         
-        ArrayList<Libro> libros = new ArrayList<>();
+        ObservableList<Libro> libros = FXCollections.observableArrayList();
         
         try {
             
@@ -65,9 +67,10 @@ public class Model {
                 Libro l = new Libro();
                 l.setTitulo(rs.getString("titulo"));
                 l.setAutor(rs.getString("autor"));
-                l.setAñoNacimiento(Integer.parseInt("añoNacimiento"));
-                l.setAñoPublicacion(Integer.parseInt("añoPublicacion"));
-                l.setPaginas(Integer.parseInt("paginas"));
+                l.setAñoNacimiento(rs.getInt("añoNacimiento"));
+                l.setAñoPublicacion(rs.getInt("añoPublicacion"));
+                l.setEditorial("editorial");
+                l.setPaginas(rs.getInt("paginas"));
              
                 libros.add(l);
                 
@@ -76,6 +79,41 @@ public class Model {
             
         } catch (SQLException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return libros;
+    }
+    
+    public ObservableList<Libro> consultaManual(String consulta){
+        
+        ObservableList<Libro> libros = FXCollections.observableArrayList();
+        
+        try {
+            
+            PreparedStatement ps = this.conn.prepareStatement(consulta);
+            ResultSet rs = ps.executeQuery();
+            
+            
+                while(rs.next()) {
+                    
+                    if(rs.getString("titulo").isEmpty())
+                        break;
+
+                    Libro l = new Libro();
+                    l.setTitulo(rs.getString("titulo"));
+                    l.setAutor(rs.getString("autor"));
+                    l.setAñoNacimiento(rs.getInt("añoNacimiento"));
+                    l.setAñoPublicacion(rs.getInt("añoPublicacion"));
+                    l.setEditorial("editorial");
+                    l.setPaginas(rs.getInt("paginas"));
+
+                    libros.add(l);
+
+                }
+            
+            
+        } catch (SQLException ex) {
+            
         }
         
         return libros;

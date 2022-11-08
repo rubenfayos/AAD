@@ -42,7 +42,7 @@ public class Model {
             Class.forName("com.mysql.jdbc.Driver");  
             url="jdbc:mysql://localhost:3306/personas";
             
-            this.conn = DriverManager.getConnection(url, "2DAM", "2DAM2020"); 
+            this.conn = DriverManager.getConnection(url, "2DAM", "2DAM2022"); 
             return 1;
             
         }catch (Exception e) {  
