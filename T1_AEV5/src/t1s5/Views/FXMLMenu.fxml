@@ -5,26 +5,26 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev5.FXMLMenuController">
+<AnchorPane id="AnchorPane" prefHeight="557.0" prefWidth="830.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev5.FXMLMenuController">
    <children>
-      <Pane fx:id="contentPane" layoutY="70.0" prefHeight="430.0" prefWidth="700.0" />
-      <Pane prefHeight="70.0" prefWidth="700.0" style="-fx-background-color: #d3d3d3;">
+      <Pane fx:id="contentPane" layoutY="70.0" prefHeight="486.0" prefWidth="830.0" />
+      <Pane prefHeight="70.0" prefWidth="830.0" style="-fx-background-color: #d3d3d3;">
          <children>
-            <Button layoutX="175.0" mnemonicParsing="false" onAction="#switchInsert" prefHeight="70.0" prefWidth="175.0" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px;" text="Insert">
+            <Button layoutX="208.0" mnemonicParsing="false" onAction="#switchInsert" prefHeight="70.0" prefWidth="207.0" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px;" text="Insert">
                <font>
                   <Font size="20.0" />
                </font></Button>
-            <Button mnemonicParsing="false" onAction="#switchSelect" prefHeight="70.0" prefWidth="175.0" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px; -fx-border-style: solid;" text="Select">
+            <Button mnemonicParsing="false" onAction="#switchSelect" prefHeight="70.0" prefWidth="207.5" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px; -fx-border-style: solid;" text="Select">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="350.0" mnemonicParsing="false" onAction="#switchUpdate" prefHeight="70.0" prefWidth="175.0" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px;" text="Update">
+            <Button layoutX="415.0" mnemonicParsing="false" onAction="#switchUpdate" prefHeight="70.0" prefWidth="207.5" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px;" text="Update">
                <font>
                   <Font size="20.0" />
                </font>
             </Button>
-            <Button layoutX="525.0" mnemonicParsing="false" onAction="#switchDelete" prefHeight="70.0" prefWidth="175.0" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px;" text="Delete">
+            <Button layoutX="622.0" mnemonicParsing="false" onAction="#switchDelete" prefHeight="70.0" prefWidth="207.5" style="-fx-background-color: 3d3d3d; -fx-border-width: 0px;" text="Delete">
                <font>
                   <Font size="20.0" />
                </font>

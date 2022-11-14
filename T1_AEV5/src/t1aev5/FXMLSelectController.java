@@ -5,12 +5,17 @@
 package t1aev5;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 /**
@@ -25,22 +30,43 @@ public class FXMLSelectController implements Initializable {
     @FXML
     private TableView<Libro> table;
     @FXML
-    private TableColumn<Libro, String> nombreColumn;
+    private TableColumn<Libro, String> tituloColumn;
     @FXML
-    private TableColumn<Libro, String> sexoColumn;
+    private TableColumn<Libro, String> autorColumn;
     @FXML
-    private TableColumn<Libro, String> edadColumn;
+    private TableColumn<Libro, String> añoNacimientoColumn;
     @FXML
-    private TableColumn<Libro, String> alturaColumn;
+    private TableColumn<Libro, String> añoPublicacionColumn;
     @FXML
-    private TableColumn<Libro, String> pesoColumn;
+    private TableColumn<Libro, String> editorialColumn;
+    @FXML
+    private TableColumn<Libro, String> paginasColumn;
+    
+    private Model model;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        this.model = new Model();
+        this.model.Conexion();
+        
+        tituloColumn.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        autorColumn.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        añoNacimientoColumn.setCellValueFactory(new PropertyValueFactory<>("añoNacimiento"));
+        añoPublicacionColumn.setCellValueFactory(new PropertyValueFactory<>("añoPublicacion"));
+        editorialColumn.setCellValueFactory(new PropertyValueFactory<>("editorial"));
+        paginasColumn.setCellValueFactory(new PropertyValueFactory<>("paginas"));
+        
+        List libros = new ArrayList();
+        
+        ObservableList<Libro> libross = FXCollections.observableArrayList();
+        libross = (ObservableList<Libro>) libros;
+        
+        table.setItems(libross);
+        
     }    
 
     @FXML

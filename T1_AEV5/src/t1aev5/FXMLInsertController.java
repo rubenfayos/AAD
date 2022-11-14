@@ -54,7 +54,7 @@ public class FXMLInsertController implements Initializable {
         l.setAñoNacimiento(añoNacimientoText.getText());
         l.setEditorial(editorialText.getText());
         
-        this.model.
+        //this.model.
         
     }
     
