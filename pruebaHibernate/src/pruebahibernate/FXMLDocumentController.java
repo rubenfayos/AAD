@@ -45,7 +45,7 @@ public class FXMLDocumentController implements Initializable {
         
         Transaction tx = session.beginTransaction();
         
-//Get Example
+        //Get Example
         try{
             Song song1 = (Song) session.get(Song.class, new Integer(1));
             System.out.println("Song get called");

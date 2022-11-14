@@ -7,7 +7,7 @@
         
         <property name = "hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <!-- Set URL -->
-        <property name = "hibernate.connection.url">jdbc:mysql://localhost:3306/canciones</property>
+        <property name = "hibernate.connection.url">jdbc:mysql://localhost:3306/libros</property>
         <!-- Set User Name -->
         <property name = "hibernate.connection.username">2DAM</property>
         <!-- Set Password -->

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXML2.java to edit this template
  */
-package t1aev4;
+package t1aev5;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -53,8 +53,6 @@ public class FXMLDocumentController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-        this.model = new Model();   
         
         tituloColumn.setCellValueFactory(new PropertyValueFactory<>("titulo"));
         autorColumn.setCellValueFactory(new PropertyValueFactory<>("autor"));
@@ -64,10 +62,8 @@ public class FXMLDocumentController implements Initializable {
         paginasColumn.setCellValueFactory(new PropertyValueFactory<>("paginas"));
         
         if(this.model.Conexion()){
-           if(this.model.creacionBDD() != 0){
-               Alert a = new Alert(Alert.AlertType.INFORMATION, "Base de datos creada");
-               a.showAndWait();
-           }
+          
+            
         }else{
             Alert conectionError = new Alert(Alert.AlertType.ERROR, "Error en la base de datos");
             conectionError.showAndWait();
@@ -78,13 +74,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void read(ActionEvent event) {
         
-        if(this.model.leerCsv(rutaText.getText())){
-            Alert conection = new Alert(Alert.AlertType.INFORMATION, "Se ha leido el fichero correctamente");
-            conection.showAndWait();
-        }else{
-            Alert conectionError = new Alert(Alert.AlertType.ERROR, "No se ha podido leer el fichero");
-            conectionError.showAndWait();
-        }
+        
         
     }
 
@@ -92,7 +82,6 @@ public class FXMLDocumentController implements Initializable {
     private void consulta(ActionEvent event) {
         
         ObservableList<Libro> libros = FXCollections.observableArrayList();
-        libros = this.model.consulta();
         
         table.setItems(libros);
         
@@ -104,7 +93,6 @@ public class FXMLDocumentController implements Initializable {
         
         ObservableList<Libro> libros = FXCollections.observableArrayList();
         if(!consultaManualText.getText().isEmpty()){
-            libros = this.model.consultaManual(consultaManualText.getText());
             if(libros.size() > 0)
                 table.setItems(libros);
             else{

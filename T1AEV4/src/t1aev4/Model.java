@@ -8,15 +8,14 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -67,10 +66,10 @@ public class Model {
                 Libro l = new Libro();
                 l.setTitulo(rs.getString("titulo"));
                 l.setAutor(rs.getString("autor"));
-                l.setAñoNacimiento(rs.getInt("añoNacimiento"));
-                l.setAñoPublicacion(rs.getInt("añoPublicacion"));
-                l.setEditorial("editorial");
-                l.setPaginas(rs.getInt("paginas"));
+                l.setAñoNacimiento(rs.getString("añoNacimiento"));
+                l.setAñoPublicacion(rs.getString("añoPublicacion"));
+                l.setEditorial(rs.getString("editorial"));
+                l.setPaginas(rs.getString("paginas"));
              
                 libros.add(l);
                 
@@ -93,20 +92,63 @@ public class Model {
             PreparedStatement ps = this.conn.prepareStatement(consulta);
             ResultSet rs = ps.executeQuery();
             
+            //ResultSetMetaData para averiguar las columnas que queremos
+            ResultSetMetaData rsmd = rs.getMetaData();
+            
+            //Cogemos las columnas 
+            int columns = rsmd.getColumnCount();
             
                 while(rs.next()) {
                     
-                    if(rs.getString("titulo").isEmpty())
-                        break;
-
                     Libro l = new Libro();
-                    l.setTitulo(rs.getString("titulo"));
-                    l.setAutor(rs.getString("autor"));
-                    l.setAñoNacimiento(rs.getInt("añoNacimiento"));
-                    l.setAñoPublicacion(rs.getInt("añoPublicacion"));
-                    l.setEditorial("editorial");
-                    l.setPaginas(rs.getInt("paginas"));
+                    
+                    for(int i = 1; i <= columns; i++){
 
+                        if(rsmd.getColumnName(i).equals("titulo")){
+                            l.setTitulo(rs.getString("titulo"));
+                            continue;
+                        }
+
+                        if(rsmd.getColumnName(i).equals("autor")){ 
+                            l.setAutor(rs.getString("autor"));
+                            continue;
+                        }
+
+                        if(rsmd.getColumnName(i).equals("añoNacimiento")){
+                            l.setAñoNacimiento(rs.getString("añoNacimiento"));
+                            continue;
+                        }
+
+                        if(rsmd.getColumnName(i).equals("añoPublicacion")){
+                            l.setAñoPublicacion(rs.getString("añoPublicacion"));
+                            continue;
+                        }
+
+                        if(rsmd.getColumnName(i).equals("editorial")){
+                            l.setEditorial(rs.getString("editorial"));
+                            continue;
+                        }
+
+                        if(rsmd.getColumnName(i).equals("paginas")){
+                            l.setPaginas(rs.getString("paginas"));
+                            continue;
+                        }
+  
+                    }
+                    
+                    if(l.getAutor() == null)
+                        l.setAutor("");
+                    if(l.getTitulo() == null)
+                        l.setTitulo("");
+                    if(l.getAñoNacimiento() == null)
+                        l.setAñoNacimiento("");
+                    if(l.getAñoPublicacion() == null)
+                        l.setAñoPublicacion("");
+                    if(l.getEditorial() == null)
+                        l.setEditorial("");
+                    if(l.getPaginas() == null)
+                        l.setPaginas("");
+                    
                     libros.add(l);
 
                 }
@@ -130,10 +172,10 @@ public class Model {
             
             ps.setString(1, l.getTitulo());
             ps.setString(2, l.getAutor());
-            ps.setInt(3, l.getAñoNacimiento());
-            ps.setInt(4, l.getAñoPublicacion());
+            ps.setString(3, l.getAñoNacimiento());
+            ps.setString(4, l.getAñoPublicacion());
             ps.setString(5, l.getEditorial());
-            ps.setInt(6, l.getPaginas());
+            ps.setString(6, l.getPaginas());
             
             //Comprueba si se ha insertado correctamente
             temp = ps.executeUpdate();
@@ -189,6 +231,35 @@ public class Model {
         
     }
     
+    public int creacionBDD(){
+        
+        int temp = 0;
+        
+        try {
+            
+            String sql = "DROP table if exists libros;\n" +
+            "\n" +
+            "create table libros(id int auto_increment primary key,\n" +
+                                "titulo varchar(255) DEFAULT \"N.C\",\n" +
+                                "autor varchar(255) DEFAULT \"N.C\",\n" +
+                                "añoNacimiento varchar(4) DEFAULT \"N.C\",\n" +
+                                "añoPublicacion varchar(4) DEFAULT \"N.C\",\n" +
+                                "editorial varchar(255) DEFAULT \"N.C\",\n" +
+                                "paginas varchar(6) DEFAULT \"N.C\");";
+            
+            //SQL de insert
+            PreparedStatement ps = this.conn.prepareStatement(sql);
+            
+            temp = ps.executeUpdate();
+                 
+        } catch (SQLException ex) {
+            Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return temp;
+        
+    }
+    
     public boolean leerCsv(String csv){
         
         File f = new File(csv);
@@ -208,12 +279,35 @@ public class Model {
 
                 String[] values = line.split(";");    // separator  
 
-                l.setTitulo(values[0]);
-                l.setAutor(values[1]);
-                l.setAñoNacimiento(Integer.parseInt(values[2]));
-                l.setAñoPublicacion(Integer.parseInt(values[3]));
-                l.setEditorial(values[4]);
-                l.setPaginas(Integer.parseInt(values[5]));
+                if(!values[0].equals(""))
+                    l.setTitulo(values[0]);
+                else
+                    l.setTitulo("N.C");
+                
+                if(!values[1].equals(""))
+                    l.setAutor(values[1]);
+                else
+                    l.setAutor("N.C");
+                
+                if(!values[2].equals(""))
+                    l.setAñoNacimiento(values[2]);
+                else
+                    l.setAñoNacimiento("N.C");
+                
+                if(!values[3].equals(""))
+                    l.setAñoPublicacion(values[3]);
+                else
+                    l.setAñoPublicacion("N.C");
+                
+                if(!values[4].equals(""))
+                    l.setEditorial(values[4]);
+                else
+                    l.setEditorial("N.C");
+                
+                if(!values[5].equals(""))
+                    l.setPaginas(values[5]);
+                else
+                    l.setPaginas("N.C");
 
                 //Inserta los libros en la tabla
                 Insert(l);
