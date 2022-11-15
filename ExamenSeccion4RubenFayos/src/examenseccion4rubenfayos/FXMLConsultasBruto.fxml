@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="498.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="examenseccion4rubenfayos.FXMLConsultasBrutoController">
+   <children>
+      <TextArea fx:id="consultaText" layoutX="25.0" layoutY="21.0" prefHeight="200.0" prefWidth="554.0" />
+      <TextArea fx:id="salidaConsultaText" layoutX="25.0" layoutY="274.0" prefHeight="200.0" prefWidth="554.0" />
+      <Button layoutX="269.0" layoutY="236.0" mnemonicParsing="false" onAction="#consultar" text="Consultar" />
+   </children>
+</AnchorPane>

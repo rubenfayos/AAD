@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="380.0" prefWidth="576.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="examenseccion4rubenfayos.FXMLDocumentController">
+    <children>
+        <Button layoutX="439.0" layoutY="43.0" onAction="#configuracion" text="Configuracion" />
+        <Label alignment="CENTER_RIGHT" layoutX="138.0" layoutY="118.0" minHeight="16" minWidth="69" text="id:" textAlignment="RIGHT">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <Button fx:id="button1" layoutX="413.0" layoutY="81.0" onAction="#consultasBruto" text="Consultas en bruto" />
+      <Label alignment="CENTER_RIGHT" layoutX="138.0" layoutY="148.0" minHeight="16" minWidth="69" text="Ciudad:" textAlignment="RIGHT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="114.0" layoutY="180.0" minHeight="16" minWidth="69" text="Código ciudad:" textAlignment="RIGHT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="138.0" layoutY="210.0" minHeight="16" minWidth="69" text="Distrito:" textAlignment="RIGHT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="138.0" layoutY="245.0" minHeight="16" minWidth="69" text="Población:" textAlignment="RIGHT">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="idText" layoutX="223.0" layoutY="115.0" />
+      <TextField fx:id="ciudadText" layoutX="223.0" layoutY="145.0" />
+      <TextField fx:id="codCiudadText" layoutX="223.0" layoutY="177.0" />
+      <TextField fx:id="distritoText" layoutX="223.0" layoutY="207.0" />
+      <TextField fx:id="poblacionText" layoutX="223.0" layoutY="242.0" />
+      <Button layoutX="321.0" layoutY="292.0" mnemonicParsing="false" onAction="#siguiente" text="&gt;" />
+      <Button layoutX="254.0" layoutY="292.0" mnemonicParsing="false" onAction="#anterior" text="&lt;" />
+      <Label fx:id="posicionText" layoutX="294.0" layoutY="296.0" text="0" />
+    </children>
+</AnchorPane>
