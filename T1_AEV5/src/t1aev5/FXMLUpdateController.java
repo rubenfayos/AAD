@@ -20,24 +20,43 @@ import javafx.scene.control.TextField;
 public class FXMLUpdateController implements Initializable {
 
     @FXML
-    private TextField nombreText;
+    private TextField tituloText;
     @FXML
-    private TextField edadText;
+    private TextField autorText;
     @FXML
-    private TextField alturaText;
+    private TextField añoPublicacionText;
     @FXML
-    private TextField pesoText;
+    private TextField editorialText;
     @FXML
-    private ComboBox<?> sexoComboBox;
+    private ComboBox<Libro> idComboBox;
     @FXML
-    private TextField idText;
+    private TextField añoNacimientoText;
+    
+    private Model model;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        this.model = new Model();
+        this.model.Conexion();
+        for(Libro l : this.model.listarLibros()){
+            idComboBox.getItems().add(l);
+        }
+        
+        
+        
+        idComboBox.valueProperty().addListener((obs, oldItem, newItem) -> {
+            
+            if (newItem != null) {
+               System.out.print("a");
+            }
+        });
+                
+                
+        
     }    
 
     @FXML

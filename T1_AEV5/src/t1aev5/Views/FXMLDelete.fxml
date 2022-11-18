@@ -9,17 +9,18 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev5.FXMLDeleteController">
    <children>
-      <Label layoutX="490.0" layoutY="82.0" text="Eliminar libro">
+      <Label layoutX="379.0" layoutY="45.0" text="Eliminar libro">
          <font>
-            <Font size="20.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button layoutX="518.0" layoutY="180.0" mnemonicParsing="false" onAction="#Delete" text="Eliminar" />
+      <Button layoutX="417.0" layoutY="331.0" mnemonicParsing="false" onAction="#Delete" style="-fx-background-color: red;" text="Eliminar" textFill="WHITE" />
       <TableView fx:id="table" layoutX="60.0" layoutY="14.0" prefHeight="358.0" prefWidth="236.0">
         <columns>
           <TableColumn fx:id="idTableRow" prefWidth="68.00000762939453" text="ID" />
             <TableColumn fx:id="tituloTableRow" prefWidth="166.39999389648438" text="Titulo" />
         </columns>
       </TableView>
+      <Label fx:id="infoText" layoutX="379.0" layoutY="88.0" prefHeight="210.0" prefWidth="126.0" />
    </children>
 </AnchorPane>

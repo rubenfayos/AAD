@@ -18,7 +18,7 @@ public class T1AEV5 extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("t1aev5/Views/FXMLMenu.fxml.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLMenu.fxml"));
         
         Scene scene = new Scene(root);
         

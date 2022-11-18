@@ -32,7 +32,7 @@ public class FXMLMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-         try {
+        try {
             AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLSelect.fxml"));
             this.contentPane.getChildren().setAll(pane);
         } catch (IOException ex) {
@@ -42,18 +42,50 @@ public class FXMLMenuController implements Initializable {
 
     @FXML
     private void switchInsert(ActionEvent event) {
+        
+        try {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLInsert.fxml"));
+            this.contentPane.getChildren().setAll(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @FXML
     private void switchSelect(ActionEvent event) {
+        
+        try {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLSelect.fxml"));
+            this.contentPane.getChildren().setAll(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @FXML
     private void switchUpdate(ActionEvent event) {
+        
+        try {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLUpdate.fxml"));
+            this.contentPane.getChildren().setAll(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @FXML
     private void switchDelete(ActionEvent event) {
+        
+        try {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLDelete.fxml"));
+            this.contentPane.getChildren().setAll(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
     
 }

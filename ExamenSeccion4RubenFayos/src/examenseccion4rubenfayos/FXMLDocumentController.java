@@ -138,6 +138,7 @@ public class FXMLDocumentController implements Initializable {
             distritoText.setText("");
             poblacionText.setText("");
             añadir = true;
+            
         }
         
                      

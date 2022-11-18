@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -39,6 +40,8 @@ public class FXMLInsertController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        //Crea la conexion
         this.model = new Model();
         this.model.Conexion();
     }    
@@ -50,11 +53,22 @@ public class FXMLInsertController implements Initializable {
         l.setTitulo(tituloText.getText());
         l.setAutor(autorText.getText());
         l.setPaginas(paginasText.getText());
-        l.setAñoPublicacion(añoPublicacionText.getText());
-        l.setAñoNacimiento(añoNacimientoText.getText());
+        l.setAnyoPublicacion(añoPublicacionText.getText());
+        l.setAnyoNacimiento(añoNacimientoText.getText());
         l.setEditorial(editorialText.getText());
         
-        //this.model.
+        //Inserta el libro
+        if(this.model.insertLibro(l) != 0){
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Se ha insertado correctamente");
+            a.showAndWait();
+        } 
+        
+        l.setTitulo("");
+        l.setAutor("");
+        l.setPaginas("");
+        l.setAnyoPublicacion("");
+        l.setAnyoNacimiento("");
+        l.setEditorial("");
         
     }
     

@@ -16,29 +16,20 @@ import javax.persistence.Table;
 @Table(name = "libros")
 public class Libro {
     
-    @Id 
-    @Column (name = "id")
-    private int id;
-    
-    @Column (name = "titulo")
-    private String titulo;
-    
-    @Column (name = "autor")
-    private String autor;
-    
-    @Column (name = "editorial")
-    private String editorial;
-    
-    @Column (name = "añoNacimiento")
-    private String añoNacimiento;
-    
-    @Column (name = "añoPublicacion")
-    private String añoPublicacion;
-    
-    @Column (name = "paginas")
-    private String paginas;
+    @Id @Column (name = "id") private int id;
+    @Column (name = "titulo") private String titulo;  
+    @Column (name = "autor") private String autor;  
+    @Column (name = "editorial") private String editorial;   
+    @Column (name = "anyoNacimiento") private String anyoNacimiento;   
+    @Column (name = "anyoPublicacion") private String anyoPublicacion;   
+    @Column (name = "paginas") private String paginas;
 
-    public Libro() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -65,20 +56,20 @@ public class Libro {
         this.editorial = editorial;
     }
 
-    public String getAñoNacimiento() {
-        return añoNacimiento;
+    public String getAnyoNacimiento() {
+        return anyoNacimiento;
     }
 
-    public void setAñoNacimiento(String añoNacimiento) {
-        this.añoNacimiento = añoNacimiento;
+    public void setAnyoNacimiento(String anyoNacimiento) {
+        this.anyoNacimiento = anyoNacimiento;
     }
 
-    public String getAñoPublicacion() {
-        return añoPublicacion;
+    public String getAnyoPublicacion() {
+        return anyoPublicacion;
     }
 
-    public void setAñoPublicacion(String añoPublicacion) {
-        this.añoPublicacion = añoPublicacion;
+    public void setAnyoPublicacion(String anyoPublicacion) {
+        this.anyoPublicacion = anyoPublicacion;
     }
 
     public String getPaginas() {
@@ -88,13 +79,6 @@ public class Libro {
     public void setPaginas(String paginas) {
         this.paginas = paginas;
     }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-   
+    
+    
 }

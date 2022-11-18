@@ -21,6 +21,7 @@ import org.hibernate.cfg.Configuration;
 public class Model {
     
     private Session session;
+    private Transaction tx;
     
     public boolean Conexion(){
         
@@ -34,7 +35,7 @@ public class Model {
             // Initialize Session Object
             this.session = sessionFactory.openSession();
 
-            Transaction tx = this.session.beginTransaction();
+            this.tx = this.session.beginTransaction();
             
             return true;
             
@@ -61,9 +62,11 @@ public class Model {
         return libros;
     }
     
-    public void insertLibro(Libro l){
+    public int insertLibro(Libro l){
         
         Serializable id = this.session.save(l);
+        this.tx.commit();
+        return (int) id;
         
     }
     
@@ -73,8 +76,8 @@ public class Model {
         
         l.setTitulo(nuevoLibro.getTitulo());
         l.setAutor(nuevoLibro.getAutor());
-        l.setAñoNacimiento(nuevoLibro.getAñoNacimiento());
-        l.setAñoPublicacion(nuevoLibro.getAñoPublicacion());
+        l.setAnyoNacimiento(nuevoLibro.getAnyoNacimiento());
+        l.setAnyoPublicacion(nuevoLibro.getAnyoPublicacion());
         l.setPaginas(nuevoLibro.getPaginas());
         l.setEditorial(nuevoLibro.getEditorial());
         
@@ -83,12 +86,12 @@ public class Model {
         
     }
     
-    public void deleteLibro(int id){
-        
-        Libro l = new Libro();
-        l.setId(id);
+    
+    
+    public void deleteLibro(Libro l){
         
         this.session.delete(l);
+        this.tx.commit();
         
     }
     
