@@ -9,42 +9,48 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev5.FXMLUpdateController">
     <children>
-      <TextField fx:id="tituloText" layoutX="225.0" layoutY="145.0" prefHeight="26.0" prefWidth="250.0" />
-      <TextField fx:id="autorText" layoutX="223.0" layoutY="207.0" prefHeight="26.0" prefWidth="120.0" />
-      <TextField fx:id="añoPublicacionText" layoutX="353.0" layoutY="270.0" prefHeight="26.0" prefWidth="120.0" />
-      <TextField fx:id="editorialText" layoutX="353.0" layoutY="207.0" prefHeight="26.0" prefWidth="120.0" />
-      <Label layoutX="292.0" layoutY="40.0" text="Editar libro">
+      <TextField fx:id="tituloText" layoutX="225.0" layoutY="131.0" prefHeight="26.0" prefWidth="250.0" />
+      <TextField fx:id="autorText" layoutX="223.0" layoutY="193.0" prefHeight="26.0" prefWidth="120.0" />
+      <TextField fx:id="añoPublicacionText" layoutX="353.0" layoutY="256.0" prefHeight="26.0" prefWidth="120.0" />
+      <TextField fx:id="editorialText" layoutX="353.0" layoutY="193.0" prefHeight="26.0" prefWidth="120.0" />
+      <Label layoutX="292.0" layoutY="26.0" text="Editar libro">
          <font>
             <Font name="System Bold" size="20.0" />
          </font></Label>
       
-      <Button layoutX="297.0" layoutY="321.0" mnemonicParsing="false" onAction="#Update" prefHeight="31.0" prefWidth="105.0" text="Update">
+      <Button layoutX="295.0" layoutY="341.0" mnemonicParsing="false" onAction="#Update" prefHeight="31.0" prefWidth="105.0" text="Update">
          <font>
             <Font size="15.0" />
          </font></Button>
-      <ComboBox fx:id="idComboBox" layoutX="273.0" layoutY="84.0" prefWidth="150.0" promptText="ID" />
-      <TextField fx:id="añoNacimientoText" layoutX="223.0" layoutY="270.0" prefHeight="26.0" prefWidth="120.0" />
-      <Label layoutX="228.0" layoutY="241.0" prefHeight="18.0" prefWidth="120.0" text="Año nacimiento">
+      <ComboBox fx:id="idComboBox" layoutX="273.0" layoutY="70.0" prefWidth="150.0" promptText="ID" />
+      <TextField fx:id="añoNacimientoText" layoutX="223.0" layoutY="256.0" prefHeight="26.0" prefWidth="120.0" />
+      <Label layoutX="228.0" layoutY="227.0" prefHeight="18.0" prefWidth="120.0" text="Año nacimiento">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="355.0" layoutY="241.0" prefHeight="18.0" prefWidth="120.0" text="Año publicacion">
+      <Label layoutX="355.0" layoutY="227.0" prefHeight="18.0" prefWidth="120.0" text="Año publicacion">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="225.0" layoutY="119.0" prefHeight="18.0" prefWidth="120.0" text="Título">
+      <Label layoutX="225.0" layoutY="105.0" prefHeight="18.0" prefWidth="120.0" text="Título">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="225.0" layoutY="180.0" prefHeight="18.0" prefWidth="120.0" text="Autor">
+      <Label layoutX="225.0" layoutY="166.0" prefHeight="18.0" prefWidth="120.0" text="Autor">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
-      <Label layoutX="352.0" layoutY="180.0" prefHeight="18.0" prefWidth="120.0" text="Editorial">
+      <Label layoutX="352.0" layoutY="166.0" prefHeight="18.0" prefWidth="120.0" text="Editorial">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="paginasText" layoutX="321.0" layoutY="296.0" prefHeight="26.0" prefWidth="54.0" />
+      <Label layoutX="264.0" layoutY="299.0" text="Páginas">
          <font>
             <Font size="14.0" />
          </font>

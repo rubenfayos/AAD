@@ -70,9 +70,9 @@ public class Model {
         
     }
     
-    public void updateLibro(int id, Libro nuevoLibro){
+    public void updateLibro(Libro nuevoLibro){
         
-        Libro l = this.session.load(Libro.class, id);
+        Libro l = this.session.load(Libro.class, nuevoLibro.getId());
         
         l.setTitulo(nuevoLibro.getTitulo());
         l.setAutor(nuevoLibro.getAutor());
@@ -82,6 +82,7 @@ public class Model {
         l.setEditorial(nuevoLibro.getEditorial());
         
         this.session.update(l);
+        this.tx.commit();
         
         
     }

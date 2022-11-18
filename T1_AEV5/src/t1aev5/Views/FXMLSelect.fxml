@@ -15,7 +15,7 @@
          </font>
       </Label>
       <Button layoutX="89.0" layoutY="24.0" mnemonicParsing="false" onAction="#refrescar" text="refrescar" />
-      <TableView fx:id="table" layoutX="15.0" layoutY="73.0" prefHeight="390.0" prefWidth="800.0">
+      <TableView fx:id="table" layoutX="15.0" layoutY="73.0" prefHeight="390.0" prefWidth="810.0">
          <columns>
             <TableColumn fx:id="tituloColumn" prefWidth="210.39995956420898" text="Título" />
             <TableColumn fx:id="autorColumn" prefWidth="207.2000274658203" text="Autor" />

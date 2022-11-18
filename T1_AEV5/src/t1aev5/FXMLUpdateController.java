@@ -28,12 +28,14 @@ public class FXMLUpdateController implements Initializable {
     @FXML
     private TextField editorialText;
     @FXML
-    private ComboBox<Libro> idComboBox;
+    private ComboBox<Integer> idComboBox;
     @FXML
     private TextField añoNacimientoText;
     
     private Model model;
-
+    private Libro libro;
+    @FXML
+    private TextField paginasText;
     /**
      * Initializes the controller class.
      */
@@ -43,24 +45,42 @@ public class FXMLUpdateController implements Initializable {
         this.model = new Model();
         this.model.Conexion();
         for(Libro l : this.model.listarLibros()){
-            idComboBox.getItems().add(l);
+            idComboBox.getItems().add(l.getId());
         }
-        
-        
-        
+       
         idComboBox.valueProperty().addListener((obs, oldItem, newItem) -> {
             
             if (newItem != null) {
                System.out.print("a");
+               this.libro = this.model.listarLibro(newItem);
+               actualizarCampos();
             }
-        });
-                
-                
-        
+        });    
     }    
+    
+    private void actualizarCampos(){
+        
+        tituloText.setText(this.libro.getTitulo());
+        editorialText.setText(this.libro.getEditorial());
+        añoNacimientoText.setText(this.libro.getAnyoNacimiento());
+        añoPublicacionText.setText(this.libro.getAnyoPublicacion());
+        autorText.setText(this.libro.getAutor());
+        paginasText.setText(this.libro.getPaginas());
+        
+    }
 
     @FXML
     private void Update(ActionEvent event) {
+        
+        libro.setTitulo(tituloText.getText());
+        libro.setEditorial(editorialText.getText());
+        libro.setAnyoNacimiento(añoNacimientoText.getText());
+        libro.setAnyoPublicacion(añoPublicacionText.getText());
+        libro.setPaginas(paginasText.getText());
+        libro.setAutor(autorText.getText());
+        
+        this.model.updateLibro(libro);
+        
     }
     
 }

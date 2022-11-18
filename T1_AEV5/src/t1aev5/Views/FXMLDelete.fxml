@@ -21,6 +21,6 @@
             <TableColumn fx:id="tituloTableRow" prefWidth="166.39999389648438" text="Titulo" />
         </columns>
       </TableView>
-      <Label fx:id="infoText" layoutX="379.0" layoutY="88.0" prefHeight="210.0" prefWidth="126.0" />
+      <Label fx:id="infoText" layoutX="362.0" layoutY="95.0" prefHeight="210.0" prefWidth="160.0" />
    </children>
 </AnchorPane>
