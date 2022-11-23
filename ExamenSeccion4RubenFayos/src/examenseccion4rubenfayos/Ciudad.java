@@ -4,6 +4,9 @@
  */
 package examenseccion4rubenfayos;
 
+import java.util.Objects;
+import javax.tools.DocumentationTool.Location;
+
 /**
  *
  * @author Ruben Fayos
@@ -55,7 +58,39 @@ public class Ciudad {
     public void setDistrito(String distrito) {
         this.distrito = distrito;
     }
-    
-    
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Ciudad other = (Ciudad) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        if (this.poblacion != other.poblacion) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.codigo, other.codigo)) {
+            return false;
+        }
+        
+        return Objects.equals(this.distrito, other.distrito);
+    }
     
 }

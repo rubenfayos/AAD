@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,32 +60,25 @@ public class Model {
         
     }
     
-    public ArrayList<Ciudad> recorrerCiudades(){
+    public ResultSet recorrerCiudades(){
+        
+         ResultSet rs = null;
         
         try {
             
-            PreparedStatement ps = this.conn.prepareStatement("SELECT * FROM city");
-            ResultSet rs = ps.executeQuery();
+            Statement stm = this.conn.createStatement(
+                ResultSet.TYPE_SCROLL_INSENSITIVE, 
+                ResultSet.CONCUR_READ_ONLY
+            );
+                    
+            rs = stm.executeQuery("SELECT * FROM city");
             
-            while(rs.next()) {
-                
-                Ciudad c = new Ciudad();
-                c.setId(rs.getInt("ID"));
-                c.setNombre(rs.getString("Name"));
-                c.setCodigo(rs.getString("CountryCode"));
-                c.setDistrito(rs.getString("District"));
-                c.setPoblacion(rs.getInt("Population"));
-                
-                this.ciudades.add(c);
-                
-            }
-            
-            
+ 
         } catch (SQLException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        return this.ciudades;
+        return rs;
            
     }
     
@@ -107,7 +101,7 @@ public class Model {
              
     }
     
-    public void insert(Ciudad c){
+    public boolean insert(Ciudad c){
         
         try {
             
@@ -121,14 +115,18 @@ public class Model {
             ps.setInt(5, c.getId());
 
             ps.execute();
+            
+            return true;
                  
         } catch (SQLException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
         
+        return false;
+        
     }
     
-    public void update(Ciudad c){
+    public boolean update(Ciudad c){
         
         try {
             
@@ -142,10 +140,13 @@ public class Model {
             ps.setInt(5, c.getId());
 
             ps.execute();
+            return true;
                  
         } catch (SQLException ex) {
             Logger.getLogger(Model.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return false;
         
     }
     
