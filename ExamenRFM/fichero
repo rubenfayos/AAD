@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<maravillas>
+    <maravilla id="1">
+        <nombre>Gran Pirámide de Guiza</nombre>
+        <pais>Egipto</pais>
+        <descripcion>Terminada alrededor del año 2570 a. C., fue construida para el faraón Keops. Ubicada en Guiza, Egipto, se trata de la más antigua, la más grande y la más duradera</descripcion>
+    </maravilla>
+    <maravilla id="2">
+        <nombre>Templo de Artemisa</nombre>
+        <pais>Turquía</pais>
+        <descripcion>En Éfeso (actual Turquía) comenzado a levantar por el rey Creso.3&#8203; Levantado hacia 550 a. C. y destruido por un incendio intencionado en 356 a. C., Alejandro Magno ordenó su reconstrucción, culminada tras su muerte en el año 323 a. C. Antípatro la conside</descripcion>
+    </maravilla>
+    <maravilla id="3">
+        <nombre>Estatua de Zeus en Olimpia</nombre>
+        <pais>Grecia</pais>
+        <descripcion>Construidos en 605 a. C.-562 a. C. ubicados en la ciudad de Babilonia, actual Irak. Perduraron hasta no más allá de 126 a. C., cuando la ciudad fue destruida definitivamente por los persas. Es la maravilla cuya existencia suscita más dudas.</descripcion>
+    </maravilla>
+    <maravilla id="4">
+        <nombre>Jardines Colgantes de Babiloni</nombre>
+        <pais>Egipto</pais>
+        <descripcion>Esculpida hacia 430 a. C. por Fidias. Ubicada en el interior del templo dedicado al propio Zeus en la ciudad anfitriona de los famosos juegos.</descripcion>
+    </maravilla>
+    <maravilla id="5">
+        <nombre>Mausoleo de Halicarnaso</nombre>
+        <pais>Turquía</pais>
+        <descripcion>Empezado por el sátrapa Mausolo y continuado por su mujer Artemisia hacia 353 a. C. en la ciudad de Halicarnaso (actual Turquía). Se supone que sobresalía sobre los demás edificios por altura y por el color blanco de los materiales utilizados. Su nombre s</descripcion>
+    </maravilla>
+    <maravilla id="6">
+        <nombre>Coloso de Rodas</nombre>
+        <pais>Grecia</pais>
+        <descripcion>Forjado entre 294 a. C. y 282 a. C. por Cares de Lindos y ubicado en el puerto de la ciudad de Rodas en la isla homónima, Grecia, tras derrotar los rodios a Demetrio Poliorcetes.</descripcion>
+    </maravilla>
+    <maravilla id="7">
+        <nombre>Faro de Alejandría</nombre>
+        <pais>Egipto</pais>
+        <descripcion>Construido entre 285 a. C. y 247 a. C. en la isla de Faros, a la entrada de Alejandría (Egipto), para guiar a los navíos que se dirigían a los dos puertos con que contaba la ciudad. Al igual que la tumba de Mausolo, la torre de Faros hizo lo propio con lo</descripcion>
+    </maravilla>
+</maravillas>

@@ -61,6 +61,7 @@ public class FXMLSelectController implements Initializable {
             pesoColumn.setCellValueFactory(new PropertyValueFactory<Persona, Double>("peso"));
         
             Consulta();
+            
         }else{
             Alert sqlError = new Alert(Alert.AlertType.ERROR, "Error con la base de datos");
             sqlError.show();
