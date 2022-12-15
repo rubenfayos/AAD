@@ -5,24 +5,44 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="469.0" prefWidth="537.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hibernateejercicios.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="626.0" prefWidth="681.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hibernateejercicios.FXMLDocumentController">
     <children>
         <Button layoutX="30.0" layoutY="39.0" onAction="#Select" text="Select" />
-      <TableView fx:id="maravillasTable" layoutX="30.0" layoutY="82.0" prefHeight="200.0" prefWidth="474.0">
+      <TableView fx:id="maravillasTable" layoutX="30.0" layoutY="82.0" prefHeight="200.0" prefWidth="606.0">
         <columns>
           <TableColumn fx:id="idColumn" prefWidth="67.20001602172852" text="ID" />
-          <TableColumn fx:id="nombreColumn" prefWidth="267.99998474121094" text="Nombre" />
-            <TableColumn fx:id="paisColumn" prefWidth="139.2000732421875" text="Pais" />
+          <TableColumn fx:id="nombreColumn" prefWidth="363.2000198364258" text="Nombre" />
+            <TableColumn fx:id="paisColumn" prefWidth="174.39999389648438" text="Pais" />
         </columns>
       </TableView>
-      <TextArea fx:id="descripcionText" layoutX="30.0" layoutY="309.0" prefHeight="100.0" prefWidth="474.0" />
+      <TextArea fx:id="descripcionText" layoutX="30.0" layoutY="309.0" prefHeight="100.0" prefWidth="606.0" />
       <Label layoutX="30.0" layoutY="291.0" text="Descripcion">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
+      <Label layoutX="30.0" layoutY="419.0" text="Insert">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="32.0" layoutY="447.0" text="Nombre" />
+      <TextField fx:id="nombreInsert" layoutX="30.0" layoutY="471.0" prefHeight="26.0" prefWidth="286.0" />
+      <Label layoutX="352.0" layoutY="447.0" text="Pais" />
+      <TextField fx:id="paisInsert" layoutX="352.0" layoutY="471.0" prefHeight="26.0" prefWidth="234.0" />
+      <Label layoutX="32.0" layoutY="512.0" text="Descripcion" />
+      <TextField fx:id="descripcionInsert" layoutX="32.0" layoutY="539.0" prefHeight="54.0" prefWidth="508.0" />
+      <Button layoutX="561.0" layoutY="554.0" mnemonicParsing="false" onAction="#Insert" text="Button" />
+      <Pane fx:id="ButtonsPane" layoutX="96.0" layoutY="30.0" prefHeight="39.0" prefWidth="228.0" visible="false">
+         <children>
+            <Button layoutX="22.0" layoutY="7.0" mnemonicParsing="false" onAction="#update" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: green;" text="Update" textFill="WHITE" />
+            <Button layoutX="114.0" layoutY="7.0" mnemonicParsing="false" onAction="#Delete" prefHeight="25.0" prefWidth="66.0" style="-fx-background-color: red;" text="Delete" textFill="WHITE" />
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

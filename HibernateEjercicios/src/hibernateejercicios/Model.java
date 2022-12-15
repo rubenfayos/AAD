@@ -33,7 +33,7 @@ public class Model {
             // Initialize Session Object
             this.session = sessionFactory.openSession();
 
-            this.tx = this.session.beginTransaction();
+            this.tx = this.session.beginTransaction();           
             
             return true;
             
@@ -50,7 +50,19 @@ public class Model {
         
        maravillas = this.session.createQuery("From Maravilla").list();
         
-        return maravillas;
+       return maravillas;
+    }
+    
+    public void insertMaravilla(Maravilla m){
+        
+        Serializable id = this.session.save(m);
+        this.tx.commit();
+        
+    }
+    
+    public void deleteMaravilla(Maravilla m){
+        this.session.delete(m);
+        this.tx.commit();
     }
     
 }

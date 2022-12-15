@@ -11,6 +11,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,7 +23,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -30,6 +34,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class FXMLDocumentController implements Initializable {
     
     private Model model;
+    private Maravilla maravillaSeleccionada;
     
     private Label label;
     @FXML
@@ -42,10 +47,21 @@ public class FXMLDocumentController implements Initializable {
     private TextArea descripcionText;
     @FXML
     private TableView<Maravilla> maravillasTable;
-    
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
+    @FXML
+    private TextField nombreInsert;
+    @FXML
+    private TextField paisInsert;
+    @FXML
+    private TextField descripcionInsert;
+    @FXML
+    private Pane ButtonsPane;
+
+    public Maravilla getMaravillaSeleccionada() {
+        return maravillaSeleccionada;
+    }
+
+    public void setMaravillaSeleccionada(Maravilla maravillaSeleccionada) {
+        this.maravillaSeleccionada = maravillaSeleccionada;
     }
     
     @Override
@@ -63,6 +79,26 @@ public class FXMLDocumentController implements Initializable {
             conError.showAndWait();
         }
         
+        maravillasTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+
+                Maravilla m = new Maravilla();
+
+                //Si el item seleccionado != null
+                if(maravillasTable.getSelectionModel().getSelectedItem() != null) {    
+
+                    setMaravillaSeleccionada(maravillasTable.getSelectionModel().getSelectedItem());
+                    ButtonsPane.setVisible(true);
+                }else{
+                    ButtonsPane.setVisible(false);
+                }
+
+            }
+        
+        });
+        
         
         
     }    
@@ -77,6 +113,31 @@ public class FXMLDocumentController implements Initializable {
         ObservableList<Maravilla> maravillasOL = FXCollections.observableArrayList(maravillas);
         maravillasTable.setItems(maravillasOL);
         
+    }
+
+    @FXML
+    private void Insert(ActionEvent event) {
+        
+        Maravilla nuevaMaravilla = new Maravilla();
+        nuevaMaravilla.setNombre(nombreInsert.getText());
+        nuevaMaravilla.setPais(paisInsert.getText());
+        nuevaMaravilla.setDescripcion(descripcionInsert.getText());
+        
+        model.insertMaravilla(nuevaMaravilla);
+        
+    }
+
+    @FXML
+    private void update(ActionEvent event) {
+    }
+
+    @FXML
+    private void Delete(ActionEvent event) {
+        
+        Alert confAlert = new Alert(Alert.AlertType.CONFIRMATION, "Seguro quieres eliminar la maravilla con el id: " + maravillaSeleccionada.getId());
+        confAlert.showAndWait();
+        
+        model.deleteMaravilla(maravillaSeleccionada);
     }
     
 }

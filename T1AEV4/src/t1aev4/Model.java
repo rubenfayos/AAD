@@ -39,7 +39,7 @@ public class Model {
         
         try {
             
-            Class.forName("com.mysql.jdbc.Driver");  
+            Class.forName("com.mysql.cj.jdbc.Driver");  
             url="jdbc:mysql://localhost:3306/biblioteca";
             
             this.conn = DriverManager.getConnection(url, "2DAM", "2DAM2022"); 
@@ -238,14 +238,13 @@ public class Model {
         try {
             
             String sql = "DROP table if exists libros;\n" +
-            "\n" +
-            "create table libros(id int auto_increment primary key,\n" +
-                                "titulo varchar(255) DEFAULT \"N.C\",\n" +
-                                "autor varchar(255) DEFAULT \"N.C\",\n" +
-                                "añoNacimiento varchar(4) DEFAULT \"N.C\",\n" +
-                                "añoPublicacion varchar(4) DEFAULT \"N.C\",\n" +
-                                "editorial varchar(255) DEFAULT \"N.C\",\n" +
-                                "paginas varchar(6) DEFAULT \"N.C\");";
+"CREATE TABLE libros(id int auto_increment," +
+"                                titulo varchar(255) DEFAULT \"N.C\",\n" +
+"                                autor varchar(255) DEFAULT \"N.C\",\n" +
+"                                añoNacimiento varchar(4) DEFAULT \"N.C\",\n" +
+"                                añoPublicacion varchar(4) DEFAULT \"N.C\",\n" +
+"                                editorial varchar(255) DEFAULT \"N.C\",\n" +
+"                                paginas varchar(6) DEFAULT \"N.C\");";
             
             //SQL de insert
             PreparedStatement ps = this.conn.prepareStatement(sql);
