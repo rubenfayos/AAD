@@ -7,6 +7,8 @@ package hibernateejercicios;
 
 import hibernateejercicios.Maravilla;
 import hibernateejercicios.Model;
+
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +19,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -26,6 +31,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  *
@@ -84,13 +91,14 @@ public class FXMLDocumentController implements Initializable {
             @Override
             public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
 
-                Maravilla m = new Maravilla();
+                Maravilla m = maravillasTable.getSelectionModel().getSelectedItem();
 
                 //Si el item seleccionado != null
-                if(maravillasTable.getSelectionModel().getSelectedItem() != null) {    
+                if(m != null) {    
 
-                    setMaravillaSeleccionada(maravillasTable.getSelectionModel().getSelectedItem());
+                    setMaravillaSeleccionada(m);
                     ButtonsPane.setVisible(true);
+                    descripcionText.setText(m.getDescripcion());
                 }else{
                     ButtonsPane.setVisible(false);
                 }
@@ -128,7 +136,11 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-    private void update(ActionEvent event) {
+    private void update(ActionEvent event) throws IOException {
+        
+        model.closeConnection();
+        FXMLUpdateController controller = new FXMLUpdateController(maravillaSeleccionada);
+        controller.showStage();
     }
 
     @FXML

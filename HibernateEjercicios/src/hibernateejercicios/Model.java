@@ -46,6 +46,7 @@ public class Model {
     
     public List<Maravilla> listarMaravillas(){
         
+       Conexion();
        List<Maravilla> maravillas = new ArrayList<>();
         
        maravillas = this.session.createQuery("From Maravilla").list();
@@ -55,13 +56,37 @@ public class Model {
     
     public void insertMaravilla(Maravilla m){
         
+        Conexion();
         Serializable id = this.session.save(m);
         this.tx.commit();
+
+        
         
     }
     
     public void deleteMaravilla(Maravilla m){
+        Conexion();
         this.session.delete(m);
+        this.tx.commit();
+        
+    }
+    
+    public void closeConnection(){
+        this.session.close();
+    }
+    
+    public void updateMaravilla(Maravilla nuevaMaravilla){
+        
+        Conexion();
+        Maravilla m = this.session.load(Maravilla.class, nuevaMaravilla.getId());
+        
+        System.out.println(m.getNombre());
+        
+        m.setNombre(nuevaMaravilla.getNombre());
+        m.setPais(nuevaMaravilla.getPais());
+        m.setDescripcion(nuevaMaravilla.getDescripcion());
+        
+        this.session.update(nuevaMaravilla);
         this.tx.commit();
     }
     
