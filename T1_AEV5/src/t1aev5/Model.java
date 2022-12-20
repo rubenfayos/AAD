@@ -7,10 +7,12 @@ package t1aev5;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale.Category;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
 
 
 
@@ -46,9 +48,13 @@ public class Model {
         
     }
     
-    public Libro listarLibro(int id){
+    public Libro listarLibro(String titulo){
         
-        Libro l = (Libro) this.session.get(Libro.class, id);
+        //Lo hago así para hacer un select de una variable
+        
+        Query query = this.session.createQuery("from Libro where titulo=:titulo");
+        query.setParameter("titulo", titulo);
+        Libro l = (Libro) query.uniqueResult();
 
         return l;
     }
@@ -72,6 +78,7 @@ public class Model {
     
     public void updateLibro(Libro nuevoLibro){
         
+        
         Libro l = this.session.load(Libro.class, nuevoLibro.getId());
         
         l.setTitulo(nuevoLibro.getTitulo());
@@ -87,8 +94,7 @@ public class Model {
         
     }
     
-    
-    
+ 
     public void deleteLibro(Libro l){
         
         this.session.delete(l);

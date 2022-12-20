@@ -80,13 +80,11 @@ public class Model {
         Conexion();
         Maravilla m = this.session.load(Maravilla.class, nuevaMaravilla.getId());
         
-        System.out.println(m.getNombre());
-        
         m.setNombre(nuevaMaravilla.getNombre());
         m.setPais(nuevaMaravilla.getPais());
         m.setDescripcion(nuevaMaravilla.getDescripcion());
         
-        this.session.update(nuevaMaravilla);
+        this.session.update(m);
         this.tx.commit();
     }
     

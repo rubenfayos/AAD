@@ -89,14 +89,13 @@ public class FXMLUpdateController implements Initializable {
             
         }else{
             
+            m.setNombre(nombreText.getText());
+            m.setPais(paisText.getText());
+            m.setDescripcion(descripcionText.getText());
             model.updateMaravilla(m);
-            
-            
+            st.close();
         }
-        
-        
-        
-            
+                 
     }
     
      public void showStage() {
@@ -104,6 +103,5 @@ public class FXMLUpdateController implements Initializable {
         st.showAndWait();
         
     }
-    
-    
+      
 }

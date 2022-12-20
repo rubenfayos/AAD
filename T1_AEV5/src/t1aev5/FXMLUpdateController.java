@@ -6,9 +6,14 @@ package t1aev5;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
@@ -27,7 +32,6 @@ public class FXMLUpdateController implements Initializable {
     private TextField añoPublicacionText;
     @FXML
     private TextField editorialText;
-    @FXML
     private ComboBox<Integer> idComboBox;
     @FXML
     private TextField añoNacimientoText;
@@ -36,6 +40,8 @@ public class FXMLUpdateController implements Initializable {
     private Libro libro;
     @FXML
     private TextField paginasText;
+    @FXML
+    private ComboBox<String> tituloComboBox;
     /**
      * Initializes the controller class.
      */
@@ -44,18 +50,55 @@ public class FXMLUpdateController implements Initializable {
         
         this.model = new Model();
         this.model.Conexion();
+        
+        //Crea un observable list para elegir el libro a cambiar
+        ObservableList<String> titulos = FXCollections.observableArrayList();
         for(Libro l : this.model.listarLibros()){
-            idComboBox.getItems().add(l.getId());
+            titulos.add(l.getTitulo());
         }
+        
+        tituloComboBox.setItems(titulos);
        
-        idComboBox.valueProperty().addListener((obs, oldItem, newItem) -> {
+        //añade el listener para el libro elegido
+        tituloComboBox.valueProperty().addListener((obs, oldItem, newItem) -> {
             
             if (newItem != null) {
-               System.out.print("a");
+                //Lista el libro a partir del titulo y actualiza los campos
                this.libro = this.model.listarLibro(newItem);
                actualizarCampos();
             }
-        });    
+        });
+        
+        // Obliga al input a ser solo numerico
+        paginasText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    paginasText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        
+        añoNacimientoText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    añoNacimientoText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        
+        añoPublicacionText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    añoPublicacionText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }    
     
     private void actualizarCampos(){
@@ -72,15 +115,26 @@ public class FXMLUpdateController implements Initializable {
     @FXML
     private void Update(ActionEvent event) {
         
-        libro.setTitulo(tituloText.getText());
-        libro.setEditorial(editorialText.getText());
-        libro.setAnyoNacimiento(añoNacimientoText.getText());
-        libro.setAnyoPublicacion(añoPublicacionText.getText());
-        libro.setPaginas(paginasText.getText());
-        libro.setAutor(autorText.getText());
-        
-        this.model.updateLibro(libro);
-        
+        if(tituloText.getText().isEmpty() || editorialText.getText().isEmpty() || añoNacimientoText.getText().isEmpty() || añoPublicacionText.getText().isEmpty() || autorText.getText().isEmpty() || paginasText.getText().isEmpty()){
+            
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Faltan datos por introducir");
+            errorAlert.showAndWait();
+            
+        }else{
+            
+            libro.setTitulo(tituloText.getText());
+            libro.setEditorial(editorialText.getText());
+            libro.setAnyoNacimiento(añoNacimientoText.getText());
+            libro.setAnyoPublicacion(añoPublicacionText.getText());
+            libro.setPaginas(paginasText.getText());
+            libro.setAutor(autorText.getText());
+
+            this.model.updateLibro(libro);
+            
+            Alert confAlert = new Alert(Alert.AlertType.INFORMATION, "Libro actualizado correctamente");
+            confAlert.showAndWait();
+        }
+           
     }
     
 }
