@@ -46,13 +46,15 @@ public class FXMLUpdateController implements Initializable {
     
     public FXMLUpdateController(Maravilla m) {
         
+        //Maravilla recibida
         this.m = m;
         
        // Create the new stage
        st = new Stage();
 
-        // Load the FXML file
         try {
+            
+            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLUpdate.fxml"));
 
             // Set this class as the controller

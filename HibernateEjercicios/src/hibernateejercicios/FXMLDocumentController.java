@@ -126,6 +126,13 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void Insert(ActionEvent event) {
         
+        if(nombreInsert.getText().isEmpty() || paisInsert.getText().isEmpty() || descripcionInsert.getText().isEmpty()){
+            
+            Alert a = new Alert(Alert.AlertType.INFORMATION, "Se ha insertado correctamente");
+            a.showAndWait();
+            
+        }else{
+                
         Maravilla nuevaMaravilla = new Maravilla();
         nuevaMaravilla.setNombre(nombreInsert.getText());
         nuevaMaravilla.setPais(paisInsert.getText());
@@ -133,12 +140,20 @@ public class FXMLDocumentController implements Initializable {
         
         model.insertMaravilla(nuevaMaravilla);
         
+        nombreInsert.setText("");
+        paisInsert.setText("");
+        descripcionInsert.setText("");
+        Select(new ActionEvent());
+                
+        }
+        
     }
 
     @FXML
     private void update(ActionEvent event) throws IOException {
         
-        model.closeConnection();
+        //Creo un objeto para así poder pasar el objeto en el constructor
+        //El Controller crea un nuevo pane en vez de crearse desde aquí
         FXMLUpdateController controller = new FXMLUpdateController(maravillaSeleccionada);
         controller.showStage();
     }
