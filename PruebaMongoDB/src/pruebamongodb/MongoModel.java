@@ -6,8 +6,12 @@ package pruebamongodb;
 
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
+import org.bson.types.ObjectId;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  *
@@ -28,14 +32,34 @@ public class MongoModel {
     }
     
     public void Insert(Cancion c){
+
         
         Document doc = new Document();
-        doc.append("SongName", "Ruben");
-        doc.append("Singer", "Cantante");
-        this.coleccion.insertOne(doc);
+        doc.append("_id", new ObjectId());
+        doc.append("SongName", "Vdaw");
+        doc.append("Singer", "Candwadnte");
         
-        this.mongoClient.close();
+        this.coleccion.insertOne(doc);
         
     }
     
+    public void Select() throws JSONException{
+        
+        MongoCursor<Document> cursor = this.coleccion.find().iterator();
+        
+        try {
+            
+            while(cursor.hasNext()){
+                JSONObject obj = new JSONObject(cursor.next().toJson());
+                System.out.println(obj.getString("SongName"));
+            }
+            
+        } finally {
+            cursor.close();
+            this.mongoClient.close();
+        }
+        
+        
+    }
+     
 }

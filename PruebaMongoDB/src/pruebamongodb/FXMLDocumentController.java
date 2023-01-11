@@ -10,7 +10,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import org.json.JSONException;
 import pruebamongodb.MongoModel;
 
 /**
@@ -23,11 +25,13 @@ public class FXMLDocumentController implements Initializable {
     private Label label;
     
     private MongoModel model;
+    @FXML
+    private Button button;
     
     @FXML
     private void handleButtonAction(ActionEvent event) {
         
-        this.model.Insert();
+        this.model.Insert(new Cancion());
         
     }
     
@@ -36,5 +40,12 @@ public class FXMLDocumentController implements Initializable {
         this.model = new MongoModel();
         this.model.Conexion();
     }    
+
+    @FXML
+    private void Select(ActionEvent event) throws JSONException {
+        
+        this.model.Select();
+        
+    }
     
 }
