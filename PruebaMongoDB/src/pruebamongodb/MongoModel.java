@@ -8,6 +8,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import org.bson.BSON;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.json.JSONException;
@@ -67,7 +68,8 @@ public class MongoModel {
     
     public void Delete(){
         
-        
+        //this.coleccion.deleteOne();
+        this.coleccion.drop();
         
     }
      
