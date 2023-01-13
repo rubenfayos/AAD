@@ -33,11 +33,10 @@ public class MongoModel {
     
     public void Insert(Cancion c){
 
-        
         Document doc = new Document();
         doc.append("_id", new ObjectId());
-        doc.append("SongName", "Vdaw");
-        doc.append("Singer", "Candwadnte");
+        doc.append("SongName", "Vdatw");
+        doc.append("Singer", "Caadtfhfnte");
         
         this.coleccion.insertOne(doc);
         
@@ -56,8 +55,18 @@ public class MongoModel {
             
         } finally {
             cursor.close();
-            this.mongoClient.close();
         }
+        
+        
+    }
+    
+    public void Update(Cancion c){
+        
+        
+    }
+    
+    public void Delete(){
+        
         
         
     }
