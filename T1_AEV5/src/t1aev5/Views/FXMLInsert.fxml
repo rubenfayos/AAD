@@ -6,19 +6,19 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev5.FXMLInsertController">
+<AnchorPane id="AnchorPane" fx:id="contentPane" prefHeight="400.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="t1aev5.FXMLInsertController">
    <children>
-      <TextField fx:id="tituloText" layoutX="225.0" layoutY="119.0" prefHeight="26.0" prefWidth="250.0" promptText="Titulo" />
-      <TextField fx:id="autorText" layoutX="225.0" layoutY="150.0" prefHeight="26.0" prefWidth="250.0" promptText="Autor" />
-      <TextField fx:id="paginasText" layoutX="355.0" layoutY="221.0" prefHeight="26.0" prefWidth="120.0" promptText="Paginas" />
-      <TextField fx:id="añoPublicacionText" layoutX="355.0" layoutY="185.0" prefHeight="26.0" prefWidth="120.0" promptText="año publicacion" />
-      <Label layoutX="298.0" layoutY="68.0" text="Añadir libro">
+      <TextField fx:id="tituloText" layoutX="295.0" layoutY="115.0" prefHeight="26.0" prefWidth="250.0" promptText="Titulo" />
+      <TextField fx:id="autorText" layoutX="295.0" layoutY="146.0" prefHeight="26.0" prefWidth="250.0" promptText="Autor" />
+      <TextField fx:id="paginasText" layoutX="425.0" layoutY="217.0" prefHeight="26.0" prefWidth="120.0" promptText="Paginas" />
+      <TextField fx:id="añoPublicacionText" layoutX="425.0" layoutY="181.0" prefHeight="26.0" prefWidth="120.0" promptText="año publicacion" />
+      <Label layoutX="368.0" layoutY="64.0" text="Añadir libro">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="329.0" layoutY="283.0" mnemonicParsing="false" onAction="#Insert" text="Añadir" />
-      <TextField fx:id="añoNacimientoText" layoutX="225.0" layoutY="185.0" prefHeight="26.0" prefWidth="120.0" promptText="año nacimiento" />
-      <TextField fx:id="editorialText" layoutX="225.0" layoutY="221.0" prefHeight="26.0" prefWidth="120.0" promptText="Editorial" />
+      <Button layoutX="399.0" layoutY="279.0" mnemonicParsing="false" onAction="#Insert" text="Añadir" />
+      <TextField fx:id="añoNacimientoText" layoutX="295.0" layoutY="181.0" prefHeight="26.0" prefWidth="120.0" promptText="año nacimiento" />
+      <TextField fx:id="editorialText" layoutX="295.0" layoutY="217.0" prefHeight="26.0" prefWidth="120.0" promptText="Editorial" />
    </children>
 </AnchorPane>

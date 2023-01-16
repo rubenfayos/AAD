@@ -12,7 +12,9 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -22,19 +24,33 @@ public class FXMLDocumentController implements Initializable {
     
     @FXML
     private Label label;
-    
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private TextField dbNameInput;
+    @FXML
+    private TextField tableInput;
+    @FXML
+    private TextField outputPathInput;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Model m = new Model();
-        m.Conexion("maravillas");
-        m.ReadTable("maravilla");
-        m.writeJson("adw");
+  
     }    
+
+    @FXML
+    private void Convert(ActionEvent event) {
+        
+        if(dbNameInput.getText().isEmpty() || tableInput.getText().isEmpty() || outputPathInput.getText().isEmpty()){
+            
+        }else{
+            
+            Model m = new Model();
+            m.Conexion(dbNameInput.getText());
+            m.ReadTable(tableInput.getText());
+            m.writeJson(outputPathInput.getText());
+        
+        }
+        
+    }
+
     
 }

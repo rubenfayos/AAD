@@ -4,21 +4,27 @@
  */
 package t1aev5;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -39,6 +45,8 @@ public class FXMLDeleteController implements Initializable {
     private Libro libroSeleccionado;
     @FXML
     private Label infoText;
+    @FXML
+    private AnchorPane contentPane;
 
     public Libro getLibroSeleccionado() {
         return libroSeleccionado;
@@ -90,7 +98,16 @@ public class FXMLDeleteController implements Initializable {
     private void Delete(ActionEvent event) {
         
         this.model.deleteLibro(libroSeleccionado);
-        Info();
+        
+        Alert a = new Alert(Alert.AlertType.INFORMATION, "Libro eliminado correctamente");
+        a.showAndWait();
+
+        try {
+            AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLDelete.fxml"));
+            this.contentPane.getChildren().setAll(pane);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLMenuController.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
     

@@ -4,14 +4,21 @@
  */
 package t1aev5;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
 /**
  * FXML Controller class
@@ -34,6 +41,8 @@ public class FXMLInsertController implements Initializable {
     private TextField editorialText;
     
     private Model model;
+    @FXML
+    private AnchorPane contentPane;
 
     /**
      * Initializes the controller class.
@@ -44,31 +53,71 @@ public class FXMLInsertController implements Initializable {
         //Crea la conexion
         this.model = new Model();
         this.model.Conexion();
+        
+        // Obliga al input a ser solo numerico
+        paginasText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    paginasText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        
+        añoNacimientoText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    añoNacimientoText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+        
+        añoPublicacionText.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, 
+                String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    añoPublicacionText.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }    
 
     @FXML
     private void Insert(ActionEvent event) {
         
-        Libro l = new Libro();
-        l.setTitulo(tituloText.getText());
-        l.setAutor(autorText.getText());
-        l.setPaginas(paginasText.getText());
-        l.setAnyoPublicacion(añoPublicacionText.getText());
-        l.setAnyoNacimiento(añoNacimientoText.getText());
-        l.setEditorial(editorialText.getText());
+        if(tituloText.getText().isEmpty() || editorialText.getText().isEmpty() || añoNacimientoText.getText().isEmpty() || añoPublicacionText.getText().isEmpty() || autorText.getText().isEmpty() || paginasText.getText().isEmpty()){
+            
+            Alert errorAlert = new Alert(Alert.AlertType.ERROR, "Faltan datos por introducir");
+            errorAlert.showAndWait();
+            
+        }else{
         
-        //Inserta el libro
-        if(this.model.insertLibro(l) != 0){
+            Libro l = new Libro();
+            l.setTitulo(tituloText.getText());
+            l.setAutor(autorText.getText());
+            l.setPaginas(paginasText.getText());
+            l.setAnyoPublicacion(añoPublicacionText.getText());
+            l.setAnyoNacimiento(añoNacimientoText.getText());
+            l.setEditorial(editorialText.getText());
+            
+            this.model.insertLibro(l);
+
+
             Alert a = new Alert(Alert.AlertType.INFORMATION, "Se ha insertado correctamente");
             a.showAndWait();
-        } 
-        
-        l.setTitulo("");
-        l.setAutor("");
-        l.setPaginas("");
-        l.setAnyoPublicacion("");
-        l.setAnyoNacimiento("");
-        l.setEditorial("");
+
+            try {
+                AnchorPane pane = FXMLLoader.load(getClass().getResource("/t1aev5/Views/FXMLSelect.fxml"));
+                this.contentPane.getChildren().setAll(pane);
+            } catch (IOException ex) {
+                Logger.getLogger(FXMLMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+        }
         
     }
     

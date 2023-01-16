@@ -46,13 +46,15 @@ public class FXMLUpdateController implements Initializable {
     
     public FXMLUpdateController(Maravilla m) {
         
+        //Maravilla recibida
         this.m = m;
         
        // Create the new stage
        st = new Stage();
 
-        // Load the FXML file
         try {
+            
+            // Load the FXML file
             FXMLLoader loader = new FXMLLoader(getClass().getResource("FXMLUpdate.fxml"));
 
             // Set this class as the controller
@@ -89,14 +91,13 @@ public class FXMLUpdateController implements Initializable {
             
         }else{
             
+            m.setNombre(nombreText.getText());
+            m.setPais(paisText.getText());
+            m.setDescripcion(descripcionText.getText());
             model.updateMaravilla(m);
-            
-            
+            st.close();
         }
-        
-        
-        
-            
+                 
     }
     
      public void showStage() {
@@ -104,6 +105,5 @@ public class FXMLUpdateController implements Initializable {
         st.showAndWait();
         
     }
-    
-    
+      
 }

@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -97,16 +98,23 @@ public class Model {
         //Creating a JSONObject object
         JSONObject parent = new JSONObject();
         int a = 0;
+        //JSONArray array = new JSONArray();
         
         try {
 
             for(ArrayList row : data){
+                
+                if(row == data.get(0))
+                    continue;
+                
                 JSONObject child = new JSONObject();
                 for(int i = 0; i < row.size(); i++){
                         //Takes the position of the column name and the data
                         child.put(String.valueOf(data.get(0).get(i)), row.get(i));
                 }
-                parent.put(a+")", child);
+                
+                //Add element to the array
+                parent.put((String) row.get(0), child);
                 a++;
             }
         
@@ -116,7 +124,7 @@ public class Model {
         
         try {
             
-            FileWriter file = new FileWriter("output.json");
+            FileWriter file = new FileWriter(url);
             file.write(parent.toString());
             file.close();
             
