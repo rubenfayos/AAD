@@ -156,6 +156,7 @@ public class FXMLDocumentController implements Initializable {
         //El Controller crea un nuevo pane en vez de crearse desde aquí
         FXMLUpdateController controller = new FXMLUpdateController(maravillaSeleccionada);
         controller.showStage();
+        Select(new ActionEvent());
     }
 
     @FXML
@@ -165,6 +166,7 @@ public class FXMLDocumentController implements Initializable {
         confAlert.showAndWait();
         
         model.deleteMaravilla(maravillaSeleccionada);
+        Select(new ActionEvent());
     }
     
 }
