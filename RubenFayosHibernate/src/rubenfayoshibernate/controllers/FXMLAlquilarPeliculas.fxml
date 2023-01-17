@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="644.0" prefWidth="853.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18" fx:controller="rubenfayoshibernate.controllers.FXMLAlquilarPeliculasController">
+   <children>
+      <TableView fx:id="tablaPeliculas" layoutX="38.0" layoutY="86.0" prefHeight="236.0" prefWidth="724.0">
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="generoColumn" prefWidth="75.0" text="Genero" />
+            <TableColumn fx:id="nombreColumn" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="detalleColumn" prefWidth="75.0" text="Detalle" />
+            <TableColumn fx:id="protagonistaColumn" prefWidth="136.800048828125" text="Protagonista" />
+            <TableColumn fx:id="precioColumn" prefWidth="74.4000244140625" text="Precio" />
+            <TableColumn fx:id="estadoColumn" prefWidth="85.5999755859375" text="Estado" />
+         </columns>
+      </TableView>
+      <Button layoutX="38.0" layoutY="44.0" mnemonicParsing="false" onAction="#listarPeliculas" text="Listar peliculas disponibles" />
+      <TableView fx:id="tablaPeliculas1" layoutX="38.0" layoutY="381.0" prefHeight="236.0" prefWidth="724.0">
+         <columns>
+            <TableColumn fx:id="idColumn1" prefWidth="75.0" text="ID" />
+            <TableColumn fx:id="generoColumn1" prefWidth="75.0" text="Genero" />
+            <TableColumn fx:id="nombreColumn1" prefWidth="75.0" text="Nombre" />
+            <TableColumn fx:id="detalleColumn1" prefWidth="75.0" text="Detalle" />
+            <TableColumn fx:id="protagonistaColumn1" prefWidth="136.800048828125" text="Protagonista" />
+            <TableColumn fx:id="precioColumn1" prefWidth="74.4000244140625" text="Precio" />
+            <TableColumn fx:id="estadoColumn1" prefWidth="85.5999755859375" text="Estado" />
+         </columns>
+      </TableView>
+      <Button layoutX="38.0" layoutY="342.0" mnemonicParsing="false" onAction="#listarAlquiladas" text="Listar mis peliculas alquiladas" />
+   </children>
+</AnchorPane>
