@@ -8,11 +8,13 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import static com.mongodb.client.model.Filters.eq;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +47,9 @@ public class MongoModel {
                 Libro l = new Libro();
                 
                 JSONObject obj = new JSONObject(cursor.next().toJson());
-                l.setId(obj.getString("Id"));
+                //Coge el objeto a partir de la id
+                JSONObject idObj = (JSONObject) obj.get("_id");
+                l.setId(idObj.getString("$oid"));
                 l.setAutor(obj.getString("Autor"));
                 l.setTitulo(obj.getString("Titol"));
                 l.setAñoNacimiento(obj.getString("Any_naixement"));
@@ -65,6 +69,26 @@ public class MongoModel {
         
         return null;
   
+    }
+    
+    public void Insertar(Libro l){
+        
+        Document doc = new Document();
+        doc.append("Titol", l.getTitulo());
+        doc.append("Autor", l.getAutor());
+        doc.append("Any_naixement", l.getAñoNacimiento());
+        doc.append("Any_publicacio", l.getAñoPublicacion());
+        doc.append("Editorial", l.getEditorial());
+        doc.append("Nombre_pagines", l.getPaginas());
+        
+        this.coleccion.insertOne(doc);
+        
+    }
+    
+    public void Actualizar(Libro l){
+        
+        Bson query = eq("_id", l.getId());
+        this.coleccion.updateOne(query, new Document("$set", query));
     }
     
 }
