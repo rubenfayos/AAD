@@ -4,36 +4,73 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="576.0" prefWidth="826.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="aev6.controllers.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aev6.controllers.FXMLDocumentController">
     <children>
-        <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <TableView fx:id="table" layoutX="19.0" layoutY="120.0" prefHeight="300.0" prefWidth="779.0">
+      <TableView fx:id="table" layoutX="19.0" layoutY="78.0" prefHeight="300.0" prefWidth="562.0">
          <columns>
-            <TableColumn fx:id="tituloColumn" prefWidth="210.39995956420898" text="Título" />
-            <TableColumn fx:id="autorColumn" prefWidth="159.20005798339844" text="Autor" />
-            <TableColumn fx:id="añoNacimientoColumn" prefWidth="99.199951171875" text="Año nacimiento" />
-            <TableColumn fx:id="añoPublicacionColumn" minWidth="6.0" prefWidth="99.20001220703125" text="Año publicacion" />
-            <TableColumn fx:id="editorialColumn" minWidth="0.0" prefWidth="120.80010986328125" text="Editorial" />
-            <TableColumn fx:id="paginasColumn" prefWidth="61.5999755859375" text="Páginas" />
+            <TableColumn fx:id="idColumn" prefWidth="68.00000381469727" text="ID" />
+            <TableColumn fx:id="tituloColumn" prefWidth="301.59996032714844" text="Título" />
+            <TableColumn fx:id="autorColumn" prefWidth="191.20001220703125" text="Autor" />
          </columns>
       </TableView>
-      <Button layoutX="19.0" layoutY="434.0" mnemonicParsing="false" onAction="#Insert" text="Añadir">
+      <Button layoutX="19.0" layoutY="397.0" mnemonicParsing="false" onAction="#Insert" text="Añadir">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="95.0" layoutY="434.0" mnemonicParsing="false" onAction="#Delete" text="Borrar">
+      <Button layoutX="95.0" layoutY="397.0" mnemonicParsing="false" onAction="#Delete" text="Borrar">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="170.0" layoutY="434.0" mnemonicParsing="false" onAction="#Modificar" text="Modificar">
+      <Button layoutX="701.0" layoutY="390.0" mnemonicParsing="false" onAction="#Modificar" text="Modificar">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
+      <Button layoutX="21.0" layoutY="34.0" mnemonicParsing="false" onAction="#Select" text="Recargar">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Button>
+      <Pane layoutX="592.0" layoutY="78.0" prefHeight="300.0" prefWidth="218.0" style="-fx-border-color: black; -fx-border-radius: 5px;">
+         <children>
+            <Label layoutX="14.0" layoutY="100.0" text="Año publicación">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="añoPublicacionText" layoutX="14.0" layoutY="136.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="14.0" layoutY="22.0" text="Año nacimiento (autor)">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="añoNacimientoText" layoutX="14.0" layoutY="58.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+            <Label layoutX="14.0" layoutY="188.0" text="Total páginas">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="paginasText" layoutX="14.0" layoutY="224.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
+         </children>
+      </Pane>
     </children>
 </AnchorPane>

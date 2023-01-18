@@ -57,7 +57,6 @@ public class FXMLDeleteController implements Initializable {
     }
     
     
-
     /**
      * Initializes the controller class.
      */

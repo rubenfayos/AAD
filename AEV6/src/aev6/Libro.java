@@ -10,11 +10,19 @@ package aev6;
  */
 public class Libro {
     
-    private String titulo, autor, editorial, añoNacimiento, añoPublicacion, paginas;
+    private String id, titulo, autor, editorial, añoNacimiento, añoPublicacion, paginas;
 
     public Libro() {
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getTitulo() {
         return titulo;
     }

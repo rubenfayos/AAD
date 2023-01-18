@@ -4,14 +4,21 @@
  */
 package aev6.controllers;
 
+import aev6.Libro;
+import aev6.MongoModel;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import org.json.JSONException;
 
 /**
  *
@@ -20,30 +27,33 @@ import javafx.scene.control.TableView;
 public class FXMLDocumentController implements Initializable {
     
     @FXML
-    private Label label;
+    private TableView<Libro> table;
     @FXML
-    private TableView<?> table;
+    private TableColumn<Libro, String> autorColumn;
     @FXML
-    private TableColumn<?, ?> tituloColumn;
+    private TableColumn<Libro, String> idColumn;
     @FXML
-    private TableColumn<?, ?> autorColumn;
+    private TableColumn<Libro, String> tituloColumn;
     @FXML
-    private TableColumn<?, ?> añoNacimientoColumn;
+    private TextField añoPublicacionText;
     @FXML
-    private TableColumn<?, ?> añoPublicacionColumn;
+    private TextField añoNacimientoText;
     @FXML
-    private TableColumn<?, ?> editorialColumn;
-    @FXML
-    private TableColumn<?, ?> paginasColumn;
+    private TextField paginasText;
     
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println("You clicked me!");
-        label.setText("Hello World!");
-    }
+    private MongoModel mongoModel;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
+        //Inicialización model 
+        mongoModel = new MongoModel();
+        mongoModel.Conexion();
+        
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tituloColumn.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        autorColumn.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        
     }    
 
     @FXML
@@ -56,6 +66,15 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private void Modificar(ActionEvent event) {
+    }
+
+    @FXML
+    private void Select(ActionEvent event) {
+        
+        
+            
+            table.setItems(mongoModel.Select());
+             
     }
     
 }
