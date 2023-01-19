@@ -4,17 +4,16 @@
  */
 package aev6;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import static com.mongodb.client.model.Filters.eq;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,8 +86,32 @@ public class MongoModel {
     
     public void Actualizar(Libro l){
         
-        Bson query = eq("_id", l.getId());
-        this.coleccion.updateOne(query, new Document("$set", query));
+        //Le asigna el IdObject
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", new ObjectId(l.getId()));
+        
+        //Crea el nuevo documento con los campos
+        BasicDBObject newDocument = new BasicDBObject();
+        newDocument.put("Titol", l.getTitulo());
+        newDocument.put("Autor", l.getAutor());
+        newDocument.put("Any_naixement", l.getAñoNacimiento());
+        newDocument.put("Any_publicacio", l.getAñoPublicacion());
+        newDocument.put("Editorial", l.getEditorial());
+        newDocument.put("Nombre_pagines", l.getPaginas());
+        
+        BasicDBObject updateObject = new BasicDBObject();
+        updateObject.put("$set", newDocument);
+        
+        this.coleccion.updateOne(query, updateObject);
+    }
+    
+    public void Delete(String id){
+        
+        BasicDBObject query = new BasicDBObject();
+        query.put("_id", new ObjectId(id));
+        
+        this.coleccion.deleteOne(query);
+        
     }
     
 }

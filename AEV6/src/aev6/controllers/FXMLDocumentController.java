@@ -9,23 +9,22 @@ import aev6.MongoModel;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import org.json.JSONException;
 
 /**
  *
@@ -59,9 +58,32 @@ public class FXMLDocumentController implements Initializable {
         mongoModel = new MongoModel();
         mongoModel.Conexion();
         
-        //idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        table.setEditable(true); 
         tituloColumn.setCellValueFactory(new PropertyValueFactory<>("titulo"));
+        
+        //permite que la celda se pueda editar
+        tituloColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        tituloColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Libro, String>>(){
+            @Override
+            public void handle(TableColumn.CellEditEvent<Libro, String> event) {
+                Libro l = event.getRowValue();
+                l.setTitulo(event.getNewValue());
+            }
+            
+        });
+        
         autorColumn.setCellValueFactory(new PropertyValueFactory<>("autor"));
+        
+        //permite que la celda se pueda editar
+        autorColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        autorColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Libro, String>>(){
+            @Override
+            public void handle(TableColumn.CellEditEvent<Libro, String> event) {
+                Libro l = event.getRowValue();
+                l.setAutor(event.getNewValue());
+            }
+            
+        });
         
         //Listener libro seleccionado
         table.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
@@ -92,26 +114,46 @@ public class FXMLDocumentController implements Initializable {
         Scene scene = new Scene(root);
         Stage stage = new Stage();
         stage.setScene(scene);
-        stage.show();
+        stage.showAndWait();
         
+        Select(new ActionEvent());
     }
 
     @FXML
     private void Delete(ActionEvent event) {
+        
+        Libro l = getLibroSeleccionado();
+        mongoModel.Delete(l.getId());
+        
+        Alert confAlert = new Alert(Alert.AlertType.CONFIRMATION, "Libro borrado correctamente");
+        confAlert.showAndWait();
+        
+        Select(new ActionEvent());
+        
     }
 
     @FXML
     private void Modificar(ActionEvent event) {
         
-        Libro l = new Libro();
-        l = getLibroSeleccionado();
+        Libro l = getLibroSeleccionado();
+        l.setEditorial(editorialText.getText());
+        l.setAñoNacimiento(añoNacimientoText.getText());
+        l.setAñoPublicacion(añoPublicacionText.getText());
+        l.setPaginas(paginasText.getText());
+        mongoModel.Actualizar(l);    
+        
+        Alert confAlert = new Alert(Alert.AlertType.CONFIRMATION, "Libro modificado correctamente");
+        confAlert.showAndWait();
+        
+        Select(new ActionEvent());
         
     }
 
     @FXML
     private void Select(ActionEvent event) {
         
-            table.setItems(mongoModel.Select());
+        table.setItems(mongoModel.Select());
+        LimpiarCampos();
              
     }
     
@@ -123,6 +165,16 @@ public class FXMLDocumentController implements Initializable {
         paginasText.setText(l.getPaginas());
         añoNacimientoText.setText(l.getAñoNacimiento());
         añoPublicacionText.setText(l.getAñoPublicacion());
+
+    }
+    
+    public void LimpiarCampos(){
+        
+        editorialText.setText("");
+        paginasText.setText("");
+        añoNacimientoText.setText("");
+        añoPublicacionText.setText("");
+        
     }
 
     public Libro getLibroSeleccionado() {
