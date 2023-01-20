@@ -46,6 +46,7 @@ public class MongoModel {
                 Libro l = new Libro();
                 
                 JSONObject obj = new JSONObject(cursor.next().toJson());
+                
                 //Coge el objeto a partir de la id
                 JSONObject idObj = (JSONObject) obj.get("_id");
                 l.setId(idObj.getString("$oid"));

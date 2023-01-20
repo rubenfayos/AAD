@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aev6.controllers.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="aev6.controllers.FXMLDocumentController">
     <children>
       <TableView fx:id="table" layoutX="19.0" layoutY="78.0" prefHeight="300.0" prefWidth="562.0">
          <columns>
@@ -17,17 +17,17 @@
             <TableColumn fx:id="autorColumn" prefWidth="238.4000244140625" text="Autor" />
          </columns>
       </TableView>
-      <Button layoutX="19.0" layoutY="397.0" mnemonicParsing="false" onAction="#Insert" text="Añadir">
+      <Button layoutX="19.0" layoutY="397.0" mnemonicParsing="false" onAction="#Insert" style="-fx-background-color: blue;" text="Añadir" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Button layoutX="95.0" layoutY="397.0" mnemonicParsing="false" onAction="#Delete" text="Borrar">
+      <Button layoutX="95.0" layoutY="397.0" mnemonicParsing="false" onAction="#Delete" style="-fx-background-color: red;" text="Borrar" textFill="WHITE">
          <font>
-            <Font size="16.0" />
+            <Font name="System Bold" size="16.0" />
          </font>
       </Button>
-      <Button layoutX="701.0" layoutY="390.0" mnemonicParsing="false" onAction="#Modificar" text="Modificar">
+      <Button layoutX="701.0" layoutY="390.0" mnemonicParsing="false" onAction="#Modificar" style="-fx-background-color: green;" text="Modificar" textFill="WHITE">
          <font>
             <Font size="16.0" />
          </font>
